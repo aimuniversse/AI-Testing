@@ -4,14 +4,9 @@ from .models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserSerializer(serializers.ModelSerializer):
-    ownerName = serializers.CharField(source='name', read_only=True)
-    companyName = serializers.CharField(source='travels_name', read_only=True)
-    MobileNumber = serializers.CharField(source='phone_number', read_only=True)
-    Location = serializers.CharField(source='place', read_only=True)
-
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'ownerName', 'companyName', 'MobileNumber', 'Location')
+        fields = ('id', 'username', 'email', 'name', 'travels_name', 'phone_number', 'place')
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -42,14 +37,14 @@ class UserLoginSerializer(serializers.Serializer):
         password = data.get('password')
 
         if identifier and password:
-            # Try to authenticate using email (since USERNAME_FIELD is 'email')
-            user = authenticate(request=self.context.get('request'), username=identifier, password=password)
+            # Try to authenticate using email
+            user = authenticate(request=self.context.get('request'), email=identifier, password=password)
             
             # If email fails, try phone number
             if not user:
                 try:
                     user_obj = User.objects.get(phone_number=identifier)
-                    user = authenticate(request=self.context.get('request'), username=user_obj.email, password=password)
+                    user = authenticate(request=self.context.get('request'), email=user_obj.email, password=password)
                 except User.DoesNotExist:
                     user = None
 

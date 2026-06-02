@@ -741,1549 +741,227 @@ Error: Unable to fetch route analysis at the moment (invalid response format)
 >>>>>>> bcf10137420b53ed1f82d74cd4551117f1f11585
 ------------------------------
 
---- API ERROR AT 2026-05-11 08:42:36.541827+00:00 ---
-Source: Coimbatore, Dest: Chennai, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 08:48:19.813744+00:00 ---
-Source: Coimbatore, Dest: Chennai, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 09:09:45.783411+00:00 ---
-Source: Coimbatore, Dest: Chennai, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
 --- EXCEPTION AT /api/accounts/login/ ---
 Traceback (most recent call last):
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
     return self.cursor.execute(sql, params)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
     return super().execute(query, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: no such table: accounts_user
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
     return view_func(request, *args, **kwargs)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\views\generic\base.py", line 106, in view
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
     return self.dispatch(request, *args, **kwargs)
-           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
     response = self.handle_exception(exc)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
     self.raise_uncaught_exception(exc)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
     raise exc
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
     response = handler(request, *args, **kwargs)
-  File "D:\Route-Analysis\Backend\accounts\views.py", line 35, in post
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Desktop\Route-Analysis\Backend\accounts\views.py", line 35, in post
     if serializer.is_valid():
-       ~~~~~~~~~~~~~~~~~~~^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\serializers.py", line 225, in is_valid
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\serializers.py", line 225, in is_valid
     self._validated_data = self.run_validation(self.initial_data)
-                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\rest_framework\serializers.py", line 459, in run_validation
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\serializers.py", line 459, in run_validation
     value = self.validate(value)
-  File "D:\Route-Analysis\Backend\accounts\serializers.py", line 41, in validate
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Desktop\Route-Analysis\Backend\accounts\serializers.py", line 41, in validate
     user = authenticate(request=self.context.get('request'), email=identifier, password=password)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\views\decorators\debug.py", line 75, in sensitive_variables_wrapper
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\debug.py", line 75, in sensitive_variables_wrapper
     return func(*func_args, **func_kwargs)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 114, in authenticate
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\__init__.py", line 114, in authenticate
     user = backend.authenticate(request, **credentials)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\contrib\auth\backends.py", line 65, in authenticate
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\backends.py", line 65, in authenticate
     user = UserModel._default_manager.get_by_natural_key(username)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\contrib\auth\base_user.py", line 37, in get_by_natural_key
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\base_user.py", line 37, in get_by_natural_key
     return self.get(**{self.model.USERNAME_FIELD: username})
-           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
     return getattr(self.get_queryset(), name)(*args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\query.py", line 635, in get
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 635, in get
     num = len(clone)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+          ^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 372, in __len__
     self._fetch_all()
-    ~~~~~~~~~~~~~~~^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
     self._result_cache = list(self._iterable_class(self))
-                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
     results = compiler.execute_sql(
-        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
-    )
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
     cursor.execute(sql, params)
-    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
     return super().execute(sql, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
     return self._execute_with_wrappers(
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
-        sql, params, many=False, executor=self._execute
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
     return executor(sql, params, many, context)
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
     with self.db.wrap_database_errors:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
     raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
     return self.cursor.execute(sql, params)
-           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
-  File "D:\Route-Analysis\Backend\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
     return super().execute(query, params)
-           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 django.db.utils.OperationalError: no such table: accounts_user
 
 ------------------------------
 
---- API ERROR AT 2026-05-11 08:31:28.696842+00:00 ---
+--- EXCEPTION AT /api/accounts/login/ ---
+Traceback (most recent call last):
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: accounts_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Desktop\Route-Analysis\Backend\accounts\views.py", line 35, in post
+    if serializer.is_valid():
+       ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\serializers.py", line 225, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\serializers.py", line 459, in run_validation
+    value = self.validate(value)
+            ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Desktop\Route-Analysis\Backend\accounts\serializers.py", line 41, in validate
+    user = authenticate(request=self.context.get('request'), email=identifier, password=password)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\debug.py", line 75, in sensitive_variables_wrapper
+    return func(*func_args, **func_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\__init__.py", line 114, in authenticate
+    user = backend.authenticate(request, **credentials)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\backends.py", line 65, in authenticate
+    user = UserModel._default_manager.get_by_natural_key(username)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\contrib\auth\base_user.py", line 37, in get_by_natural_key
+    return self.get(**{self.model.USERNAME_FIELD: username})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 635, in get
+    num = len(clone)
+          ^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 372, in __len__
+    self._fetch_all()
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: accounts_user
+
+------------------------------
+
+--- API ERROR AT 2026-05-19 10:35:59.240016+00:00 ---
 Source: Hyderabad, Dest: Vijayawada, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
+Error: Unable to fetch route analysis at the moment
 ------------------------------
 
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
+--- API ERROR AT 2026-05-19 10:46:49.628837+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
 ------------------------------
 
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
+--- API ERROR AT 2026-05-19 10:51:49.917538+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
 ------------------------------
 
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
-------------------------------
-
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
-------------------------------
-
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
-------------------------------
-
---- EXCEPTION AT /api/popular-searches/ ---
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: functions_popularsearch
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\core\handlers\base.py", line 198, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\views\generic\base.py", line 106, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Desktop\ai\Route-Analysis\Backend\functions\views.py", line 163, in get_popular_searches
-    data = [p.route_text for p in popular]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 390, in __iter__
-    self._fetch_all()
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 2000, in _fetch_all
-    self._result_cache = list(self._iterable_class(self))
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\query.py", line 95, in __iter__
-    results = compiler.execute_sql(
-              ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\models\sql\compiler.py", line 1624, in execute_sql
-    cursor.execute(sql, params)
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
-    return super().execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
-    return self._execute_with_wrappers(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
-    with self.db.wrap_database_errors:
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\utils.py", line 94, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
-    return self.cursor.execute(sql, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\DELL\Envs\ai\Lib\site-packages\django\db\backends\sqlite3\base.py", line 359, in execute
-    return super().execute(query, params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-django.db.utils.OperationalError: no such table: functions_popularsearch
-
-------------------------------
-
---- JSON DECODE ERROR AT 2026-05-11 07:56:17.499836+00:00 ---
-Error: Expecting property name enclosed in double quotes: line 14 column 18 (char 300)
-Raw Content: 
-{
-  "route_summary": {
-    "path": "Thiruvarur to Coimbatore via Tiruchirappalli",
-    "total_distance": 434,
-    "estimated_time": 6.5
-  },
-  "population_data": {
-    "source": {
-      "name": "Thiruvarur",
-      "count": 381
-    },
-    "destination": {
-      "name": "Coimbatore",
-      "count": 1,045,509
-    }
-  },
-  "area_segmentation": {
-    "business_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 8,
-        "activity": 9,
-        "type": "Industrial"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 9,
-        "activity": 8,
-        "type": "Industrial"
-      }
-    ],
-    "student_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 6,
-        "activity": 7,
-        "type": "Educational"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 5,
-        "activity": 6,
-        "type": "Educational"
-      }
-    ],
-    "tourist_areas": [
-      {
-        "name": "Thanjavur",
-        "potential": 7,
-        "activity": 8,
-        "type": "Cultural"
-      },
-      {
-        "name": "Trichy",
-        "potential": 6,
-        "activity": 7,
-        "type": "Cultural"
-      }
-    ]
-  },
-  "visitor_data": [
-    {
-      "place_name": "Tiruchirappalli",
-      "yearly": 250000,
-      "daily": 675
-    },
-    {
-      "place_name": "Coimbatore",
-      "yearly": 750000,
-      "daily": 2050
-    }
-  ],
-  "demand_distribution": [
-    {
-      "state": "Tamil Nadu",
-      "percentage": 80,
-      "cities": [
-        {
-          "name": "Tiruchirappalli",
-          "percentage": 40
-        },
-        {
-          "name": "Coimbatore",
-          "percentage": 30
-        }
-      ]
-    },
-    {
-      "state": "Kerala",
-      "percentage": 10,
-      "cities": [
-        {
-          "name": "Kochi",
-          "percentage": 5
-        }
-      ]
-    }
-  ],
-  "distance_details": [
-    {
-      "segment": "Thiruvarur to Tiruchirappalli",
-      "distance_km": 120
-    },
-    {
-      "segment": "Tiruchirappalli to Coimbatore",
-      "distance_km": 314
-    }
-  ],
-  "transport_distribution": {
-    "bus": 0.6,
-    "train": 0.2,
-    "car": 0.1,
-    "taxi": 0.05,
-    "flight": 0.05
-  },
-  "logistics_services": {
-    "parcel_movement": {
-      "bus": 0.4,
-      "train": 0.3,
-      "courier": 0.2,
-      "taxi": 0.1
-    },
-    "modes_used": ["Bus", "Train", "Courier", "Taxi"]
-  },
-  "transport_schedule": {
-    "bus": {
-      "total_daily_trips": 250,
-      "operators": ["TNSTC", "SETC"],
-      "peak_hours": ["06:00-08:00", "16:00-18:00"],
-      "frequency_minutes": 30
-    },
-    "train": {
-      "total_daily_trips": 50,
-      "major_trains": ["Tiruchirappalli Express", "Coimbatore Express"]
-    },
-    "route_details": [
-      {
-        "from": "Thiruvarur",
-        "to": "Tiruchirappalli",
-        "bus_trips": 50,
-        "train_trips": 10
-      },
-      {
-        "from": "Tiruchirappalli",
-        "to": "Coimbatore",
-        "bus_trips": 100,
-        "train_trips": 20
-      }
-    ]
-  },
-  "suggested_routes": [
-    {
-      "option": 1,
-      "path": "Thiruvarur to Tiruchirappalli to Coimbatore",
-      "distance": 434,
-      "time": 6.5
-    },
-    {
-      "option": 2,
-      "path": "Thiruvarur to Coimbatore via Erode",
-      "distance": 420,
-      "time": 6.2
-    }
-  ],
-  "dashboard_data": {
-    "traffic_trends": [
-      {
-        "time": "06:00-08:00",
-        "value": 100
-      },
-      {
-        "time": "16:00-18:00",
-        "value": 150
-      }
-    ],
-    "travel_time_by_hour": [
-      {
-        "hour": "06:00",
-        "minutes": 30
-      },
-      {
-        "hour": "12:00",
-        "minutes": 45
-      }
-    ],
-    "live_updates": [
-      {
-        "incident": "Road closure due to accident",
-        "severity": "High",
-        "time": "10:00"
-      }
-    ],
-    "weather": {
-      "impact": "Low",
-      "details": "Clear skies with a high of 28°C"
-    },
-    "area_potential": [
-      {
-        "district": "Tiruchirappalli",
-        "population": 900000,
-        "potential_score": 8,
-        "business_potential": "High",
-        "growth_rate": 3.5,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 9
-          },
-          {
-            "name": "Manufacturing",
-            "score": 8
-          }
-        ]
-      },
-      {
-        "district": "Coimbatore",
-        "population": 1,045,509,
-        "potential_score": 9,
-        "business_potential": "Very High",
-        "growth_rate": 4.2,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 10
-          },
-          {
-            "name": "Manufacturing",
-            "score": 9
-          }
-        ]
-      }
-    ],
-    "corridor_potential": {
-      "business": 8,
-      "student": 6,
-      "tourist": 7
-    }
-  }
-}
-
-------------------------------
-
---- API ERROR AT 2026-05-11 07:56:17.504849+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (invalid response format)
-------------------------------
-
---- JSON DECODE ERROR AT 2026-05-11 08:15:22.913975+00:00 ---
-Error: Expecting property name enclosed in double quotes: line 14 column 18 (char 300)
-Raw Content: 
-{
-  "route_summary": {
-    "path": "Thiruvarur to Coimbatore via Tiruchirappalli",
-    "total_distance": 340,
-    "estimated_time": 5.5
-  },
-  "population_data": {
-    "source": {
-      "name": "Thiruvarur",
-      "count": 164
-    },
-    "destination": {
-      "name": "Coimbatore",
-      "count": 1,045,503
-    }
-  },
-  "area_segmentation": {
-    "business_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 8,
-        "activity": 6,
-        "type": "Industrial"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 9,
-        "activity": 8,
-        "type": "Industrial"
-      }
-    ],
-    "student_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 7,
-        "activity": 5,
-        "type": "Educational"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 6,
-        "activity": 4,
-        "type": "Educational"
-      }
-    ],
-    "tourist_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 5,
-        "activity": 3,
-        "type": "Cultural"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 4,
-        "activity": 2,
-        "type": "Cultural"
-      }
-    ]
-  },
-  "visitor_data": [
-    {
-      "place_name": "Tiruchirappalli",
-      "yearly": 1,200,000,
-      "daily": 3,300
-    },
-    {
-      "place_name": "Coimbatore",
-      "yearly": 4,500,000,
-      "daily": 12,500
-    }
-  ],
-  "demand_distribution": [
-    {
-      "state": "Tamil Nadu",
-      "percentage": 80,
-      "cities": [
-        {
-          "name": "Tiruchirappalli",
-          "percentage": 40
-        },
-        {
-          "name": "Coimbatore",
-          "percentage": 30
-        }
-      ]
-    },
-    {
-      "state": "Other States",
-      "percentage": 20,
-      "cities": []
-    }
-  ],
-  "distance_details": [
-    {
-      "segment": "Thiruvarur to Tiruchirappalli",
-      "distance_km": 120
-    },
-    {
-      "segment": "Tiruchirappalli to Coimbatore",
-      "distance_km": 220
-    }
-  ],
-  "transport_distribution": {
-    "bus": 0.6,
-    "train": 0.2,
-    "car": 0.1,
-    "taxi": 0.05,
-    "flight": 0.05
-  },
-  "logistics_services": {
-    "parcel_movement": {
-      "bus": 0.4,
-      "train": 0.3,
-      "courier": 0.2,
-      "taxi": 0.1
-    },
-    "modes_used": ["Bus", "Train", "Courier", "Taxi"]
-  },
-  "transport_schedule": {
-    "bus": {
-      "total_daily_trips": 250,
-      "operators": ["TNSTC", "SETC"],
-      "peak_hours": ["06:00-08:00", "16:00-18:00"],
-      "frequency_minutes": 30
-    },
-    "train": {
-      "total_daily_trips": 50,
-      "major_trains": ["Tiruchirappalli Express", "Coimbatore Express"]
-    },
-    "route_details": [
-      {
-        "from": "Thiruvarur",
-        "to": "Tiruchirappalli",
-        "bus_trips": 100,
-        "train_trips": 20
-      },
-      {
-        "from": "Tiruchirappalli",
-        "to": "Coimbatore",
-        "bus_trips": 150,
-        "train_trips": 30
-      }
-    ]
-  },
-  "suggested_routes": [
-    {
-      "option": 1,
-      "path": "Thiruvarur to Tiruchirappalli to Coimbatore",
-      "distance": 340,
-      "time": 5.5
-    },
-    {
-      "option": 2,
-      "path": "Thiruvarur to Coimbatore via Erode",
-      "distance": 320,
-      "time": 5.2
-    }
-  ],
-  "dashboard_data": {
-    "traffic_trends": [
-      {
-        "time": "06:00-08:00",
-        "value": 100
-      },
-      {
-        "time": "16:00-18:00",
-        "value": 150
-      }
-    ],
-    "travel_time_by_hour": [
-      {
-        "hour": "06:00",
-        "minutes": 30
-      },
-      {
-        "hour": "12:00",
-        "minutes": 45
-      }
-    ],
-    "live_updates": [
-      {
-        "incident": "Road closure due to accident",
-        "severity": "High",
-        "time": "2023-02-20 14:00:00"
-      }
-    ],
-    "weather": {
-      "impact": "Low",
-      "details": "Partly cloudy with a high of 28°C"
-    },
-    "area_potential": [
-      {
-        "district": "Tiruchirappalli",
-        "population": 2,723,325,
-        "potential_score": 8,
-        "business_potential": "High",
-        "growth_rate": 3.5,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 9
-          },
-          {
-            "name": "Manufacturing",
-            "score": 8
-          }
-        ]
-      },
-      {
-        "district": "Coimbatore",
-        "population": 3,475,907,
-        "potential_score": 9,
-        "business_potential": "Very High",
-        "growth_rate": 4.2,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 10
-          },
-          {
-            "name": "Manufacturing",
-            "score": 9
-          }
-        ]
-      }
-    ],
-    "corridor_potential": {
-      "business": 8,
-      "student": 6,
-      "tourist": 4
-    }
-  }
-}
-
-------------------------------
-
---- API ERROR AT 2026-05-11 08:15:22.917152+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (invalid response format)
-------------------------------
-
---- JSON DECODE ERROR AT 2026-05-11 08:41:18.952669+00:00 ---
-Error: Expecting property name enclosed in double quotes: line 14 column 18 (char 300)
-Raw Content: 
-{
-  "route_summary": {
-    "path": "Thiruvarur to Coimbatore via Tiruchirappalli",
-    "total_distance": 340,
-    "estimated_time": 5.5
-  },
-  "population_data": {
-    "source": {
-      "name": "Thiruvarur",
-      "count": 351
-    },
-    "destination": {
-      "name": "Coimbatore",
-      "count": 1,045,279
-    }
-  },
-  "area_segmentation": {
-    "business_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 8,
-        "activity": 9,
-        "type": "Industrial"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 9,
-        "activity": 8,
-        "type": "Commercial"
-      }
-    ],
-    "student_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 6,
-        "activity": 7,
-        "type": "Educational"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 5,
-        "activity": 4,
-        "type": "Educational"
-      }
-    ],
-    "tourist_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 7,
-        "activity": 6,
-        "type": "Cultural"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 8,
-        "activity": 9,
-        "type": "Cultural"
-      }
-    ]
-  },
-  "visitor_data": [
-    {
-      "place_name": "Tiruchirappalli Rock Fort",
-      "yearly": 50000,
-      "daily": 137
-    },
-    {
-      "place_name": "Coimbatore Juma Masjid",
-      "yearly": 30000,
-      "daily": 82
-    }
-  ],
-  "demand_distribution": [
-    {
-      "state": "Tamil Nadu",
-      "percentage": 80,
-      "cities": [
-        {
-          "name": "Tiruchirappalli",
-          "percentage": 30
-        },
-        {
-          "name": "Coimbatore",
-          "percentage": 50
-        }
-      ]
-    }
-  ],
-  "distance_details": [
-    {
-      "segment": "Thiruvarur to Tiruchirappalli",
-      "distance_km": 120
-    },
-    {
-      "segment": "Tiruchirappalli to Coimbatore",
-      "distance_km": 220
-    }
-  ],
-  "transport_distribution": {
-    "bus": 0.6,
-    "train": 0.2,
-    "car": 0.1,
-    "taxi": 0.05,
-    "flight": 0.05
-  },
-  "logistics_services": {
-    "parcel_movement": {
-      "bus": 0.4,
-      "train": 0.3,
-      "courier": 0.2,
-      "taxi": 0.1
-    },
-    "modes_used": ["Bus", "Train", "Courier", "Taxi"]
-  },
-  "transport_schedule": {
-    "bus": {
-      "total_daily_trips": 250,
-      "operators": ["TNSTC", "SETC"],
-      "peak_hours": ["06:00-08:00", "16:00-18:00"],
-      "frequency_minutes": 30
-    },
-    "train": {
-      "total_daily_trips": 50,
-      "major_trains": ["Tiruchirappalli Express", "Coimbatore Express"]
-    },
-    "route_details": [
-      {
-        "from": "Thiruvarur",
-        "to": "Tiruchirappalli",
-        "bus_trips": 100,
-        "train_trips": 20
-      },
-      {
-        "from": "Tiruchirappalli",
-        "to": "Coimbatore",
-        "bus_trips": 150,
-        "train_trips": 30
-      }
-    ]
-  },
-  "suggested_routes": [
-    {
-      "option": 1,
-      "path": "Thiruvarur to Coimbatore via Tiruchirappalli",
-      "distance": 340,
-      "time": 5.5
-    }
-  ],
-  "dashboard_data": {
-    "traffic_trends": [
-      {
-        "time": "06:00-08:00",
-        "value": 500
-      },
-      {
-        "time": "16:00-18:00",
-        "value": 700
-      }
-    ],
-    "travel_time_by_hour": [
-      {
-        "hour": "06:00",
-        "minutes": 30
-      },
-      {
-        "hour": "12:00",
-        "minutes": 45
-      }
-    ],
-    "live_updates": [
-      {
-        "incident": "Road closure due to accident",
-        "severity": "High",
-        "time": "2023-02-20 14:00:00"
-      }
-    ],
-    "weather": {
-      "impact": "Low",
-      "details": "Partly cloudy with a high of 28°C"
-    },
-    "area_potential": [
-      {
-        "district": "Tiruchirappalli",
-        "population": 2,723,445,
-        "potential_score": 8,
-        "business_potential": "High",
-        "growth_rate": 3.5,
-        "sectors": [
-          {
-            "name": "Manufacturing",
-            "score": 9
-          },
-          {
-            "name": "Services",
-            "score": 8
-          }
-        ]
-      },
-      {
-        "district": "Coimbatore",
-        "population": 3,475,907,
-        "potential_score": 9,
-        "business_potential": "Very High",
-        "growth_rate": 4.2,
-        "sectors": [
-          {
-            "name": "Manufacturing",
-            "score": 10
-          },
-          {
-            "name": "Services",
-            "score": 9
-          }
-        ]
-      }
-    ],
-    "corridor_potential": {
-      "business": 8,
-      "student": 6,
-      "tourist": 7
-    }
-  }
-}
-
-------------------------------
-
---- API ERROR AT 2026-05-11 08:41:18.958840+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (invalid response format)
-------------------------------
-
---- JSON DECODE ERROR AT 2026-05-11 08:42:25.448759+00:00 ---
-Error: Expecting property name enclosed in double quotes: line 14 column 18 (char 300)
-Raw Content: 
-{
-  "route_summary": {
-    "path": "Thiruvarur to Coimbatore via Tiruchirappalli",
-    "total_distance": 340,
-    "estimated_time": 5.5
-  },
-  "population_data": {
-    "source": {
-      "name": "Thiruvarur",
-      "count": 351
-    },
-    "destination": {
-      "name": "Coimbatore",
-      "count": 1,347,448
-    }
-  },
-  "area_segmentation": {
-    "business_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 8,
-        "activity": 7,
-        "type": "Industrial"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 9,
-        "activity": 8,
-        "type": "Industrial"
-      }
-    ],
-    "student_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 6,
-        "activity": 5,
-        "type": "Educational"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 7,
-        "activity": 6,
-        "type": "Educational"
-      }
-    ],
-    "tourist_areas": [
-      {
-        "name": "Tiruchirappalli",
-        "potential": 5,
-        "activity": 4,
-        "type": "Cultural"
-      },
-      {
-        "name": "Coimbatore",
-        "potential": 6,
-        "activity": 5,
-        "type": "Cultural"
-      }
-    ]
-  },
-  "visitor_data": [
-    {
-      "place_name": "Tiruchirappalli",
-      "yearly": 1,200,000,
-      "daily": 3,300
-    },
-    {
-      "place_name": "Coimbatore",
-      "yearly": 4,500,000,
-      "daily": 12,300
-    }
-  ],
-  "demand_distribution": [
-    {
-      "state": "Tamil Nadu",
-      "percentage": 80,
-      "cities": [
-        {
-          "name": "Tiruchirappalli",
-          "percentage": 30
-        },
-        {
-          "name": "Coimbatore",
-          "percentage": 50
-        }
-      ]
-    }
-  ],
-  "distance_details": [
-    {
-      "segment": "Thiruvarur to Tiruchirappalli",
-      "distance_km": 120
-    },
-    {
-      "segment": "Tiruchirappalli to Coimbatore",
-      "distance_km": 220
-    }
-  ],
-  "transport_distribution": {
-    "bus": 0.7,
-    "train": 0.2,
-    "car": 0.05,
-    "taxi": 0.05,
-    "flight": 0.05
-  },
-  "logistics_services": {
-    "parcel_movement": {
-      "bus": 0.6,
-      "train": 0.2,
-      "courier": 0.1,
-      "taxi": 0.1
-    },
-    "modes_used": ["Bus", "Train", "Courier", "Taxi"]
-  },
-  "transport_schedule": {
-    "bus": {
-      "total_daily_trips": 500,
-      "operators": ["TNSTC", "SETC"],
-      "peak_hours": ["06:00-08:00", "16:00-18:00"],
-      "frequency_minutes": 30
-    },
-    "train": {
-      "total_daily_trips": 100,
-      "major_trains": ["Tiruchirappalli Express", "Coimbatore Express"]
-    },
-    "route_details": [
-      {
-        "from": "Thiruvarur",
-        "to": "Tiruchirappalli",
-        "bus_trips": 200,
-        "train_trips": 50
-      },
-      {
-        "from": "Tiruchirappalli",
-        "to": "Coimbatore",
-        "bus_trips": 300,
-        "train_trips": 50
-      }
-    ]
-  },
-  "suggested_routes": [
-    {
-      "option": 1,
-      "path": "Thiruvarur to Tiruchirappalli to Coimbatore",
-      "distance": 340,
-      "time": 5.5
-    }
-  ],
-  "dashboard_data": {
-    "traffic_trends": [
-      {
-        "time": "06:00-08:00",
-        "value": 1000
-      },
-      {
-        "time": "16:00-18:00",
-        "value": 1500
-      }
-    ],
-    "travel_time_by_hour": [
-      {
-        "hour": "06:00",
-        "minutes": 30
-      },
-      {
-        "hour": "12:00",
-        "minutes": 45
-      }
-    ],
-    "live_updates": [
-      {
-        "incident": "Road closure at Thiruvarur",
-        "severity": "High",
-        "time": "2024-03-12 14:00"
-      }
-    ],
-    "weather": {
-      "impact": "Low",
-      "details": "Partly cloudy with a high of 28°C"
-    },
-    "area_potential": [
-      {
-        "district": "Tiruchirappalli",
-        "population": 2,723,325,
-        "potential_score": 8,
-        "business_potential": "High",
-        "growth_rate": 3.5,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 9
-          },
-          {
-            "name": "Manufacturing",
-            "score": 8
-          }
-        ]
-      },
-      {
-        "district": "Coimbatore",
-        "population": 3,458,045,
-        "potential_score": 9,
-        "business_potential": "Very High",
-        "growth_rate": 4.2,
-        "sectors": [
-          {
-            "name": "IT",
-            "score": 10
-          },
-          {
-            "name": "Manufacturing",
-            "score": 9
-          }
-        ]
-      }
-    ],
-    "corridor_potential": {
-      "business": 8,
-      "student": 6,
-      "tourist": 5
-    }
-  }
-}
-
-------------------------------
-
---- API ERROR AT 2026-05-11 08:42:25.455239+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (invalid response format)
-------------------------------
-
---- API ERROR AT 2026-05-11 08:46:11.760691+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 08:47:12.548803+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 08:49:11.785132+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 08:54:53.970646+00:00 ---
-Source: Thiruvarur, Dest: Coimbatore, Via: Tiruchirappalli
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 09:46:59.762672+00:00 ---
-Source: Chennai, Dest: Coimbatore, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 10:15:43.501808+00:00 ---
-Source: Chennai, Dest: Coimbatore, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 10:15:43.604958+00:00 ---
-Source: Chennai, Dest: Coimbatore, Via: 
-Error: Unable to fetch route analysis at the moment (request timed out)
-------------------------------
-
---- API ERROR AT 2026-05-11 10:16:26.907857+00:00 ---
+--- API ERROR AT 2026-06-01 09:22:23.607414+00:00 ---
 Source: Chennai, Dest: Coimbatore, Via: 
 Error: Unable to fetch route analysis at the moment
 ------------------------------
 
---- API ERROR AT 2026-05-11 10:16:26.909506+00:00 ---
+--- API ERROR AT 2026-06-01 09:22:34.779844+00:00 ---
+Source: Chennai, Dest: Coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-01 09:27:35.358901+00:00 ---
+Source: Chennai, Dest: Coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-01 09:27:35.370895+00:00 ---
 Source: Chennai, Dest: Coimbatore, Via: 
 Error: Unable to fetch route analysis at the moment
 ------------------------------

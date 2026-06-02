@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 # Dependencies
 node_modules/
 Backend/venv/
+venv/
 
 # Local env files
 .env
@@ -16,6 +16,7 @@ build/
 __pycache__/
 *.pyc
 Backend/db.sqlite3
+db.sqlite3
 
 # IDEs
 .vscode/
@@ -24,11 +25,12 @@ Backend/db.sqlite3
 # OS
 .DS_Store
 Thumbs.db
-=======
-venv/
-__pycache__/
-*.pyc
-db.sqlite3
-.env
-.DS_Store
->>>>>>> 1e1fac4 (changing api respones from the backend)
+
+# Logs
+*.log
+django_request.log
+django_error.log
+
+# Large data files (optional - uncomment if you don't want these tracked)
+# india_cities.csv
+# indian_cities.csv

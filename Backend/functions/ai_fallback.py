@@ -1,173 +1,296 @@
 import os
 import json
-import requests
+import logging
 from django.utils import timezone
 
-def generate_route_analysis(source, destination, via=None):
-    """
-    Calls the NVIDIA API to generate a HIGH-ACCURACY, REALISTIC, and STRICTLY STRUCTURED 
-    Route Analysis JSON response as a Senior Transportation Data Engineer.
-    """
-    api_key = os.getenv("NVIDIA_API_KEY")
-    if not api_key:
-        return None, "NVIDIA_API_KEY is not set in the environment variables."
+logger = logging.getLogger(__name__)
 
-    # Prompt definition based on Senior Transportation Data Engineer requirements
-    prompt = f"""
-You are a Senior Transportation Data Engineer and AI Data Validator.
-Generate a HIGH-ACCURACY, REALISTIC, and STRICTLY STRUCTURED Route Analysis for: {source} to {destination}{f' via {via}' if via else ''}.
+try:
+    from google import genai
+    genai_available = True
+except ImportError:
+    genai_available = False
 
-CORE OBJECTIVE:
-Transform this request into a production-grade transport analytics dataset with realistic Indian geography-based models.
 
-HARD RULES:
-1. ALL percentages MUST sum exactly to 100.
-2. NO fake small populations. Use realistic metro values (e.g., Chennai ~8M-12M, Coimbatore ~2M-4M, Tier-2 cities scaled realistically).
-3. Demand Distribution MUST include TOP 3 STATES only, with exactly 5 cities per state. Balanced weighting.
-4. Transport Distribution MUST reflect real-world usage (Bus: 40-65%, Train: 20-35%, others minimal). MUST sum to 100.
-5. Logistics MUST be percentage-based only (NO company names). MUST sum to 100.
-6. Distance MUST show ONLY SOURCE → DESTINATION total distance (No segment breakdowns).
-7. Transport Schedule MUST show ONLY DIRECT SOURCE → DESTINATION trips. Realistic frequency: Bus 80-300/day, Train 10-40/day.
-8. Area Segmentation: Max 5 meaningful entries per category. Format: "Entity Name (City Name)".
-9. RETURN ONLY CLEAN JSON. NO explanation, NO markdown, NO comments.
+def _build_verified_context(source, destination, via,
+                            source_city, dest_city, via_city, osrm_data):
+    """Build the verified data JSON string to inject into the AI prompt."""
+    path_parts = [source]
+    if via:
+        path_parts.append(via)
+    path_parts.append(destination)
 
-OUTPUT STRUCTURE:
-{{
-"status": "success",
-"data_source": "ai_generated",
-"data": {{
-"route_summary": {{
-  "path": ["string"],
-  "total_distance_km": number,
-  "estimated_time_hours": number
-}},
-"population_data": {{
-  "source": {{ "name": "string", "population": number }},
-  "destination": {{ "name": "string", "population": number }},
-  "via": {{ "name": "string", "population": number }}
-}},
-"area_segmentation": {{
-  "starting_point": "string",
-  "final_destination": "string",
-  "important_stops": ["string"],
-  "job_business_areas": ["string"],
-  "student_areas": ["string"],
-  "tourist_places": ["string"]
-}},
-"visitor_data": {{
-  "source": {{ "yearly_total": number, "daily_normal": number, "daily_peak": number }},
-  "destination": {{ "yearly_total": number, "daily_normal": number, "daily_peak": number }}
-}},
-"demand_distribution": [
-  {{
-    "state": "string",
-    "percentage": number,
-    "top_cities": [
-      {{ "name": "string", "percentage": number, "visitor_count": number }},
-      {{ "name": "string", "percentage": number, "visitor_count": number }},
-      {{ "name": "string", "percentage": number, "visitor_count": number }},
-      {{ "name": "string", "percentage": number, "visitor_count": number }},
-      {{ "name": "string", "percentage": number, "visitor_count": number }}
-    ]
-  }}
-],
-"distance_details": {{
-  "from": "string",
-  "to": "string",
-  "distance_km": number
-}},
-"transport_distribution": {{
-  "bus": number,
-  "train": number,
-  "car": number,
-  "taxi": number,
-  "flight": number
-}},
-"logistics_services": {{
-  "bus": number,
-  "train": number,
-  "courier": number,
-  "taxi": number
-}},
-"transport_schedule": [
-  {{ "from": "string", "to": "string", "type": "bus | train", "trips_per_day": number }}
-]
-}}
-}}
-"""
+    distance_km = osrm_data['total_distance'] if osrm_data else 0
+    duration_hours = osrm_data['estimated_time'] if osrm_data else 0
 
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
+    context = {
+        "route_summary": {
+            "path": path_parts,
+            "total_distance": distance_km,
+            "estimated_time": duration_hours
+        },
+        "population_data": {
+            "source": {
+                "name": source,
+                "population": source_city['population'] if source_city else 0,
+                "latitude": source_city['latitude'] if source_city else 0,
+                "longitude": source_city['longitude'] if source_city else 0
+            },
+            "destination": {
+                "name": destination,
+                "population": dest_city['population'] if dest_city else 0,
+                "latitude": dest_city['latitude'] if dest_city else 0,
+                "longitude": dest_city['longitude'] if dest_city else 0
+            }
+        }
     }
 
-    payload = {
-        "model": "meta/llama-3.1-8b-instruct",
-        "messages": [
-            {"role": "system", "content": "You are a professional transportation data analyst. Provide consistent, deterministic JSON data."},
-            {"role": "user", "content": prompt}
-        ],
-        "temperature": 0.1,
-        "max_tokens": 4096
-    }
+    if via and via_city:
+        context["population_data"]["via"] = {
+            "name": via,
+            "population": via_city['population'],
+            "latitude": via_city['latitude'],
+            "longitude": via_city['longitude']
+        }
+
+    return json.dumps(context, indent=2)
+
+
+def _build_prompt(verified_context):
+    """Build the Gemini prompt with pre-verified data context."""
+    return (
+        "You are a Senior Route Analysis Data Engine.\n\n"
+        "IMPORTANT:\n\n"
+        "The backend has already calculated and verified:\n\n"
+        "1. Route distance\n"
+        "2. Route duration\n"
+        "3. Population\n"
+        "4. Latitude\n"
+        "5. Longitude\n\n"
+        "These values come from:\n\n"
+        "- indian_cities.csv\n"
+        "- OSRM Routing API\n\n"
+        "You MUST use these values exactly as provided.\n\n"
+        "NEVER:\n\n"
+        "- generate population\n"
+        "- generate latitude\n"
+        "- generate longitude\n"
+        "- generate distance\n"
+        "- generate duration\n"
+        "- modify any provided values\n\n"
+        "INPUT:\n\n"
+        + verified_context + "\n\n"
+        "Generate ONLY the following sections:\n\n"
+        "1. area_segmentation\n"
+        "2. visitor_data\n"
+        "3. demand_distribution\n"
+        "4. transport_distribution\n"
+        "5. logistics_services\n"
+        "6. transport_schedule\n\n"
+        "Requirements:\n\n"
+        "- Use realistic Indian geography.\n"
+        "- Use realistic tourism patterns.\n"
+        "- Use realistic education hubs.\n"
+        "- Use realistic business hubs.\n"
+        "- Use realistic transport demand.\n"
+        "- All percentages must total 100 where applicable.\n"
+        "- Transport distribution must total 100.\n"
+        "- Logistics distribution must total 100.\n"
+        "- Do not create impossible routes.\n"
+        "- Do not modify any backend values.\n\n"
+        "Return ONLY valid JSON. No markdown. No explanations. No extra sections.\n\n"
+        "Output Format:\n\n"
+        "{\n"
+        '  "area_segmentation": {\n'
+        '    "job_business_areas": [{"name": "string"}],\n'
+        '    "student_areas": [{"name": "string"}],\n'
+        '    "tourist_places": [{"name": "string"}]\n'
+        "  },\n"
+        '  "visitor_data": {\n'
+        '    "source": {"yearly_total": int, "daily_normal": int, "daily_peak": int},\n'
+        '    "destination": {"yearly_total": int, "daily_normal": int, "daily_peak": int}\n'
+        "  },\n"
+        '  "demand_distribution": [\n'
+        '    {"state": "string", "percentage": float, "cities": [{"name": "string", "percentage": float, "visitor_count": int}]}\n'
+        "  ],\n"
+        '  "transport_distribution": {"bus": float, "train": float, "car": float, "taxi": float, "flight": float},\n'
+        '  "logistics_services": {"bus": float, "train": float, "courier": float, "taxi": float},\n'
+        '  "transport_schedule": [{"from": "string", "to": "string", "type": "string", "trips_per_day": int}]\n'
+        "}\n"
+    )
+
+
+def generate_route_analysis(source, destination, via=None,
+                            source_city=None, dest_city=None,
+                            via_city=None, osrm_data=None):
+    """
+    Calls the Gemini API to generate ONLY analytical sections.
+    Pre-verified data (population, coordinates, distance, time) is passed
+    as read-only context — the AI never regenerates those values.
+
+    Returns: (data_dict, error_string) tuple
+    """
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("gemini_api_key")
+
+    if not genai_available or not api_key:
+        logger.warning("Gemini API unavailable. Using mock fallback data.")
+        return _generate_mock_data(source, destination, via), None
+
+    # Build prompt with verified data context
+    verified_context = _build_verified_context(
+        source, destination, via,
+        source_city, dest_city, via_city, osrm_data
+    )
+    prompt = _build_prompt(verified_context)
+
+    client = genai.Client(api_key=api_key)
     content = ""
     try:
-        # Increased timeout to 90 seconds to allow for complex generations
-        response = requests.post(
-            "https://integrate.api.nvidia.com/v1/chat/completions", 
-            headers=headers, 
-            json=payload,
-            timeout=180
+        response = client.models.generate_content(
+            model="gemini-3-flash-preview",
+            contents=prompt
         )
-        response.raise_for_status()
-        
-        response_data = response.json()
-        content = response_data['choices'][0]['message']['content'].strip()
-        
-        # Extract JSON from potential conversational filler
-        start_index = content.find('{')
-        end_index = content.rfind('}')
-        
-        if start_index != -1 and end_index != -1:
-            json_content = content[start_index:end_index+1]
-            try:
-                parsed_json = json.loads(json_content)
-                return parsed_json, None
-            except json.JSONDecodeError:
-                # If extraction failed, fall back to stripping markdown
-                pass
 
-        # Original cleanup logic as fallback
-        if content.startswith("```json"):
-            content = content[7:]
-        elif content.startswith("```"):
-            content = content[3:]
-            
-        if content.endswith("```"):
-            content = content[:-3]
-            
-        parsed_json = json.loads(content.strip())
-        return parsed_json, None
+        # Extract text content from various response formats
+        if isinstance(response, dict):
+            content = (response.get("content")
+                       or response.get("output_text")
+                       or response.get("text"))
+        else:
+            content = (getattr(response, "content", None)
+                       or getattr(response, "output_text", None)
+                       or getattr(response, "text", None))
+            if not content and hasattr(response, "to_dict"):
+                rd = response.to_dict()
+                content = (rd.get("content")
+                           or rd.get("output_text")
+                           or rd.get("text"))
 
-    except requests.exceptions.Timeout:
-        print("API Error: Request timed out")
-        return None, "Unable to fetch route analysis at the moment (request timed out)"
-    except requests.exceptions.RequestException as e:
-        error_msg = "Unable to fetch route analysis at the moment"
-        print(f"API Error: {str(e)}") 
-        if hasattr(e, 'response') and e.response is not None:
-            print(f"API Response Body: {e.response.text}")
-        return None, error_msg
+        if not content:
+            return None, "Gemini API returned an unexpected response format."
+
+        content = content.strip()
+
+        # Extract JSON from response
+        parsed = _extract_json(content)
+        if parsed is not None:
+            return parsed, None
+
+        return None, "Unable to parse JSON from Gemini response."
+
     except json.JSONDecodeError as e:
-        import traceback
-        with open('django_error.log', 'a', encoding='utf-8') as f:
-            f.write(f"\n--- JSON DECODE ERROR AT {timezone.now()} ---\n")
-            f.write(f"Error: {str(e)}\n")
-            f.write(f"Raw Content: {content}\n")
-            f.write("------------------------------\n")
+        _log_error("JSON DECODE ERROR", str(e), content)
         return None, "Unable to fetch route analysis at the moment (invalid response format)"
     except Exception as e:
         import traceback
-        print(f"Unexpected Error: {str(e)}")
+        logger.error(f"Gemini API error: {str(e)}")
         traceback.print_exc()
         return None, "Unable to fetch route analysis at the moment"
+
+
+def _extract_json(content):
+    """Try multiple strategies to extract valid JSON from AI response."""
+    # Strategy 1: Find outermost JSON object boundaries
+    start = content.find('{')
+    end = content.rfind('}')
+    if start != -1 and end != -1:
+        try:
+            return json.loads(content[start:end + 1])
+        except json.JSONDecodeError:
+            pass
+
+    # Strategy 2: Strip markdown code fences
+    stripped = content
+    if stripped.startswith("```json"):
+        stripped = stripped[7:]
+    elif stripped.startswith("```"):
+        stripped = stripped[3:]
+    if stripped.endswith("```"):
+        stripped = stripped[:-3]
+
+    try:
+        return json.loads(stripped.strip())
+    except json.JSONDecodeError:
+        pass
+
+    return None
+
+
+def _log_error(label, error_msg, raw_content=""):
+    """Append error details to the error log file."""
+    try:
+        with open('django_error.log', 'a', encoding='utf-8') as f:
+            f.write(f"\n--- {label} AT {timezone.now()} ---\n")
+            f.write(f"Error: {error_msg}\n")
+            if raw_content:
+                f.write(f"Raw Content: {raw_content[:2000]}\n")
+            f.write("------------------------------\n")
+    except Exception:
+        pass
+
+
+def _generate_mock_data(source, destination, via):
+    """Generate schema-compliant mock fallback when Gemini is unavailable."""
+    mock = {
+        "area_segmentation": {
+            "job_business_areas": [
+                {"name": f"{source} Commercial Hub"},
+                {"name": f"{destination} Business District"}
+            ],
+            "student_areas": [
+                {"name": f"{source} University Area"},
+                {"name": f"{destination} College Zone"}
+            ],
+            "tourist_places": [
+                {"name": f"{source} Heritage Site"},
+                {"name": f"{destination} Tourist Attraction"}
+            ]
+        },
+        "visitor_data": {
+            "source": {
+                "yearly_total": 500000,
+                "daily_normal": 1400,
+                "daily_peak": 3500
+            },
+            "destination": {
+                "yearly_total": 400000,
+                "daily_normal": 1100,
+                "daily_peak": 2800
+            }
+        },
+        "demand_distribution": [
+            {
+                "state": "Local State",
+                "percentage": 60.0,
+                "cities": [
+                    {"name": source, "percentage": 35.0, "visitor_count": 50000},
+                    {"name": destination, "percentage": 25.0, "visitor_count": 35000}
+                ]
+            },
+            {
+                "state": "Neighboring State",
+                "percentage": 40.0,
+                "cities": [
+                    {"name": "Nearby City", "percentage": 40.0, "visitor_count": 20000}
+                ]
+            }
+        ],
+        "transport_distribution": {
+            "bus": 35.0,
+            "train": 25.0,
+            "car": 20.0,
+            "taxi": 10.0,
+            "flight": 10.0
+        },
+        "logistics_services": {
+            "bus": 30.0,
+            "train": 40.0,
+            "courier": 20.0,
+            "taxi": 10.0
+        },
+        "transport_schedule": [
+            {"from": source, "to": destination, "type": "bus", "trips_per_day": 15},
+            {"from": source, "to": destination, "type": "train", "trips_per_day": 6}
+        ]
+    }
+    return mock

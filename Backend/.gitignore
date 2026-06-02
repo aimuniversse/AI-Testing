@@ -1,34 +1,6 @@
-<<<<<<< HEAD
-# Dependencies
-node_modules/
-Backend/venv/
-
-# Local env files
-.env
-.env.local
-.env.*.local
-
-# Build outputs
-dist/
-build/
-
-# Python
-__pycache__/
-*.pyc
-Backend/db.sqlite3
-
-# IDEs
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-=======
 venv/
 __pycache__/
 *.pyc
 db.sqlite3
 .env
 .DS_Store
->>>>>>> 1e1fac4 (changing api respones from the backend)

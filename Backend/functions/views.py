@@ -13,6 +13,7 @@ from .models import (
     ParcelService, SuggestedRoute, RouteAnalysisCache, PopularSearch
 )
 from .ai_fallback import generate_route_analysis
+from .route_engine import search_city, get_osrm_route, apply_verified_overrides
 from django.utils import timezone
 from datetime import timedelta
 
@@ -36,21 +37,55 @@ def extract_number(text, default=10):
 
 def get_route_analysis_data(source_name, dest_name, via_name):
     """
-    ALWAYS fetches fresh data from NVIDIA API. 
-    No database caching or fallback logic is used.
+    Validates source, destination, and via cities against indian_cities.csv,
+    queries real-time routing from OSRM, calls Gemini API for analysis report,
+    and returns verified geodata and routing metrics.
     """
     if not source_name or not dest_name:
         return None, "Source and destination cities are required."
+
+    # STEP 1 & 2: Load cities from CSV
+    source_city = search_city(source_name)
+    if not source_city:
+        return None, "Source city not found in indian_cities.csv"
+
+    destination_city = search_city(dest_name)
+    if not destination_city:
+        return None, "Destination city not found in indian_cities.csv"
+
+    via_city = None
+    if via_name:
+        via_city = search_city(via_name)
+        if not via_city:
+            return None, "Via city not found in indian_cities.csv"
+
+    # STEP 3 & 4: Fetch OSRM routing metrics
+    osrm_data, osrm_err = get_osrm_route(source_city, destination_city, via_city)
+    if osrm_err:
+        return None, osrm_err
 
     # Directly call the AI generation function
     ai_data, ai_error = generate_route_analysis(source_name, dest_name, via_name)
     
     if ai_data and not ai_error:
-        # The AI now returns the full structure including status and data_source
-        return ai_data, None
+        # STEP 5 & 6 & 7: Replace Gemini estimates with verified data
+        verified_data = apply_verified_overrides(
+            ai_data=ai_data,
+            source=source_city,
+            destination=destination_city,
+            via=via_city,
+            osrm_data=osrm_data
+        )
+
+        return {
+            "status": "success",
+            "data_source": "google_gemini_api",
+            "data": verified_data
+        }, None
 
     # Error: API failed or returned invalid data
     return None, ai_error or "Unable to fetch route analysis"
+
 
 
 def index(request):
@@ -123,6 +158,12 @@ def analyze_route_api(request):
     try:
         response_data, error = get_route_analysis_data(source_name, dest_name, via_name)
         if error:
+            # Check for CSV validation errors and return standard HTTP 400 Bad Request
+            if "not found in indian_cities.csv" in error:
+                return Response({
+                    "error": error
+                }, status=status.HTTP_400_BAD_REQUEST)
+
             with open('django_error.log', 'a', encoding='utf-8') as f:
                 f.write(f"\n--- API ERROR AT {timezone.now()} ---\n")
                 f.write(f"Source: {source_name}, Dest: {dest_name}, Via: {via_name}\n")
