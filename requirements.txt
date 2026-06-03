@@ -6,3 +6,4 @@ djangorestframework
 requests
 django-cors-headers
 djangorestframework-simplejwt
+google-genai
