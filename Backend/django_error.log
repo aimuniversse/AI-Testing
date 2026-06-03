@@ -965,3 +965,8 @@ Error: Unable to fetch route analysis at the moment
 Source: Chennai, Dest: Coimbatore, Via: 
 Error: Unable to fetch route analysis at the moment
 ------------------------------
+
+--- API ERROR AT 2026-06-02 07:14:34.047551+00:00 ---
+Source: Tirupati, Dest: Rameswaram, Via: Tiruvannamalai
+Error: Unable to fetch route analysis at the moment
+------------------------------
