@@ -3354,10 +3354,13 @@ Content: {"error":"Source city not found in indian_cities.csv"}
 --- REQUEST AT /api/route-analysis/ ---
 Body: {"source":"Bangalore","destination":"Chennai","via":""}
 ------------------------------
+<<<<<<< HEAD
+=======
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 400
 Content: {"error":"Source city not found in indian_cities.csv"}
 ------------------------------
+>>>>>>> f643d93cca92e2ecb22501925cd8097f15b33c09
 
 --- REQUEST AT /api/route-analysis/ ---
 Body: {"source":"Bangalore","destination":"Chennai","via":""}
@@ -3366,6 +3369,11 @@ Body: {"source":"Bangalore","destination":"Chennai","via":""}
 Status: 400
 Content: {"error":"Source city not found in indian_cities.csv"}
 ------------------------------
+<<<<<<< HEAD
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 400
+Content: {"error":"Source city not found in indian_cities.csv"}
+=======
 
 --- REQUEST AT /api/route-analysis/ ---
 Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
@@ -3379,4 +3387,5 @@ Status: 200
 ------------------------------
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
+>>>>>>> f643d93cca92e2ecb22501925cd8097f15b33c09
 ------------------------------
