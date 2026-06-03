@@ -89,11 +89,16 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
 
         // ── Fetch backend data (runs in background) ───────────────────────────
         const fetchData = async () => {
+            if (!from || !to) {
+                setError("Origin and destination are required for route analysis.");
+                return;
+            }
+
             try {
                 const response = await fetch("/api/route-analysis/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ source: from, destination: to, via }),
+                    body: JSON.stringify({ source: from, destination: to, via: via || "" }),
                 });
 
                 if (!response.ok) {

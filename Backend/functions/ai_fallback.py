@@ -176,7 +176,9 @@ def generate_route_analysis(source, destination, via=None,
         if parsed is not None:
             return parsed, None
 
-        return None, "Unable to parse JSON from Gemini response."
+        _log_error("JSON PARSE FAILURE", "Unable to parse JSON from Gemini response.", content)
+        logger.warning("Gemini returned invalid JSON; falling back to mock route analysis.")
+        return _generate_mock_data(source, destination, via), None
 
     except json.JSONDecodeError as e:
         _log_error("JSON DECODE ERROR", str(e), content)

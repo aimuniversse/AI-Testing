@@ -64,8 +64,16 @@ def get_route_analysis_data(source_name, dest_name, via_name):
     if osrm_err:
         return None, osrm_err
 
-    # Directly call the AI generation function
-    ai_data, ai_error = generate_route_analysis(source_name, dest_name, via_name)
+    # Directly call the AI generation function with verified context
+    ai_data, ai_error = generate_route_analysis(
+        source_name,
+        dest_name,
+        via_name,
+        source_city=source_city,
+        dest_city=destination_city,
+        via_city=via_city,
+        osrm_data=osrm_data
+    )
     
     if ai_data and not ai_error:
         # STEP 5 & 6 & 7: Replace Gemini estimates with verified data

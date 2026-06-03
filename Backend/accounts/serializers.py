@@ -37,14 +37,14 @@ class UserLoginSerializer(serializers.Serializer):
         password = data.get('password')
 
         if identifier and password:
-            # Try to authenticate using email
-            user = authenticate(request=self.context.get('request'), email=identifier, password=password)
+            # Authenticate using the configured USERNAME_FIELD (email)
+            user = authenticate(request=self.context.get('request'), username=identifier, password=password)
             
-            # If email fails, try phone number
+            # If email fails, try phone number as the login identifier
             if not user:
                 try:
                     user_obj = User.objects.get(phone_number=identifier)
-                    user = authenticate(request=self.context.get('request'), email=user_obj.email, password=password)
+                    user = authenticate(request=self.context.get('request'), username=user_obj.email, password=password)
                 except User.DoesNotExist:
                     user = None
 
