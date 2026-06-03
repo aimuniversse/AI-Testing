@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Loader2, Maximize2, Minimize2, Map as MapIcon, Navigation } from 'lucide-react';
+import { Loader2, Maximize2, Minimize2, Map as MapIcon, Navigation, Users, Factory, MapPin, GraduationCap } from 'lucide-react';
 import './MapArea.css';
 import routeMap from "../assets/image/maparea.png";
 
 const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [hoveredMarker, setHoveredMarker] = useState(null);
   const routePath = routeData?.route_summary?.path || routeQuery || '';
   let parsedPath = [];
   if (Array.isArray(routePath)) {
@@ -29,6 +30,82 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const sourcePosition = { left: 88.5, top: 8.2 };
   const viaPosition = { left: 50, top: 45 };
   const destPosition = { left: 17.6, top: 94 };
+
+  const extractItemsForCity = (items, cityName) => {
+    if (!items || !cityName) return [];
+    const cn = cityName.split(',')[0].trim().toLowerCase();
+    return items.filter(item =>
+      item.toLowerCase().includes(cn)
+    ).slice(0, 3);
+  };
+
+  const srcCity = sourceName.split(',')[0].trim();
+  const dstCity = destName.split(',')[0].trim();
+  const viaCity = viaName ? viaName.split(',')[0].trim() : null;
+
+  const sourceInfo = {
+    population: routeData?.population_data?.source?.population,
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, srcCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, srcCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, srcCity)
+  };
+
+  const destInfo = {
+    population: routeData?.population_data?.destination?.population,
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, dstCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, dstCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, dstCity)
+  };
+
+  const viaInfo = viaCity ? {
+    population: routeData?.population_data?.via?.population,
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, viaCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, viaCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, viaCity)
+  } : null;
+
+  const InfoPanel = ({ info, cityName, position }) => {
+    if (!info) return null;
+    const hasData = info.population || info.industries.length > 0 || info.touristPlaces.length > 0 || info.education.length > 0;
+    if (!hasData) return null;
+    return (
+      <div className={`map-info-panel ${position}`} onClick={e => e.stopPropagation()}>
+        <div className="info-panel-header">
+          <span className="info-panel-city">{cityName}</span>
+        </div>
+        <div className="info-panel-body">
+          {info.population && (
+            <div className="info-row">
+              <Users size={14} />
+              <span className="info-label">Population:</span>
+              <span className="info-value">{(info.population / 10000000).toFixed(1)} Cr</span>
+            </div>
+          )}
+          {info.industries.length > 0 && (
+            <div className="info-row">
+              <Factory size={14} />
+              <span className="info-label">Industries:</span>
+              <span className="info-value">{info.industries.join(', ')}</span>
+            </div>
+          )}
+          {info.touristPlaces.length > 0 && (
+            <div className="info-row">
+              <MapPin size={14} />
+              <span className="info-label">Tourist:</span>
+              <span className="info-value">{info.touristPlaces.join(', ')}</span>
+            </div>
+          )}
+          {info.education.length > 0 && (
+            <div className="info-row">
+              <GraduationCap size={14} />
+              <span className="info-label">Education:</span>
+              <span className="info-value">{info.education.join(', ')}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={`route-map-shell ${isFullscreen ? 'fullscreen-active' : ''}`}>
@@ -139,24 +216,24 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
                     </td>
                   </tr>
                   {viaName && (
-                  <tr>
-                    <td style={{
-                      color: 'var(--text-muted)',
-                      padding: '4px 0',
-                      borderBottom: '1px solid var(--border-light)'
-                    }}>
-                      Via
-                    </td>
-                    <td style={{
-                      color: 'var(--accent-orange, #f59e0b)',
-                      padding: '4px 0',
-                      textAlign: 'right',
-                      fontWeight: '600',
-                      borderBottom: '1px solid var(--border-light)'
-                    }}>
-                      {viaName?.length > 10 ? `${viaName.substring(0, 10)}...` : viaName}
-                    </td>
-                  </tr>
+                    <tr>
+                      <td style={{
+                        color: 'var(--text-muted)',
+                        padding: '4px 0',
+                        borderBottom: '1px solid var(--border-light)'
+                      }}>
+                        Via
+                      </td>
+                      <td style={{
+                        color: 'var(--accent-orange, #f59e0b)',
+                        padding: '4px 0',
+                        textAlign: 'right',
+                        fontWeight: '600',
+                        borderBottom: '1px solid var(--border-light)'
+                      }}>
+                        {viaName?.length > 10 ? `${viaName.substring(0, 10)}...` : viaName}
+                      </td>
+                    </tr>
                   )}
                   <tr>
                     <td style={{
@@ -211,34 +288,64 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
                 transform: isLoading ? 'scale(1.05)' : 'scale(1)'
               }}
             />
-            
+
             {!isLoading && sourcePosition && destPosition && (
               <div className="map-markers-overlay">
                 <div className="map-marker source" style={{ left: `${sourcePosition.left}%`, top: `${sourcePosition.top}%` }}>
                   <div className="marker-icon-container">
                     {/*<div className="marker-pin source-pin" />*/}
                   </div>
-                  <div className="marker-label source-label">{sourceName || 'Source'}</div>
+                  <div
+                    className="marker-label source-label"
+                    style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                    onMouseEnter={() => setHoveredMarker('source')}
+                    onMouseLeave={() => setHoveredMarker(null)}
+                  >
+                    {sourceName || 'Source'}
+                  </div>
+                  {hoveredMarker === 'source' && (
+                    <InfoPanel info={sourceInfo} cityName={srcCity} position="below" />
+                  )}
                 </div>
 
                 {viaName && (
-                <div className="map-marker via" style={{ left: `${viaPosition.left}%`, top: `${viaPosition.top}%` }}>
-                  <div className="marker-icon-container via">
-                    {/*<div className="marker-pin via-pin" />*/}
+                  <div className="map-marker via" style={{ left: `${viaPosition.left}%`, top: `${viaPosition.top}%` }}>
+                    <div className="marker-icon-container via">
+                      {/*<div className="marker-pin via-pin" />*/}
+                    </div>
+                    <div
+                      className="marker-label via-label"
+                      style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                      onMouseEnter={() => setHoveredMarker('via')}
+                      onMouseLeave={() => setHoveredMarker(null)}
+                    >
+                      {viaName}
+                    </div>
+                    {hoveredMarker === 'via' && viaInfo && (
+                      <InfoPanel info={viaInfo} cityName={viaCity} position="below" />
+                    )}
                   </div>
-                  <div className="marker-label via-label">{viaName}</div>
-                </div>
                 )}
-                
+
                 <div className="map-marker destination" style={{ left: `${destPosition.left}%`, top: `${destPosition.top}%` }}>
                   <div className="marker-icon-container destination">
                     {/*<div className="marker-pin dest-pin" />*/}
                   </div>
-                  <div className="marker-label dest-label">{destName || 'Destination'}</div>
+                  <div
+                    className="marker-label dest-label"
+                    style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+                    onMouseEnter={() => setHoveredMarker('destination')}
+                    onMouseLeave={() => setHoveredMarker(null)}
+                  >
+                    {destName || 'Destination'}
+                  </div>
+                  {hoveredMarker === 'destination' && (
+                    <InfoPanel info={destInfo} cityName={dstCity} position="above" />
+                  )}
                 </div>
               </div>
             )}
-            
+
           </div>
 
           {isLoading && (

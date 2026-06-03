@@ -5,10 +5,10 @@ import './RouteSummary.css';
 const RouteSummary = ({ routeData, routeQuery, isLoading }) => {
   const distance = routeData?.distances?.[0]?.km || routeData?.distance || "—";
   const trafficLoad = routeData?.transport_details?.[0]?.frequency ? (Math.random() * 100 | 0) : 36;
-  
+
   const timeMins = distance && distance !== "—" ? Math.round(Number(distance) / 40 * 60) : 0;
   const formattedTime = timeMins > 60 ? `${Math.floor(timeMins / 60)}h ${timeMins % 60}m` : timeMins > 0 ? `${timeMins} min` : "—";
-  
+
   const fuelCost = distance && distance !== "—" ? Math.round(Number(distance) * 5.5) : "—";
   const riskLevel = trafficLoad > 70 ? 'High' : trafficLoad > 40 ? 'Moderate' : 'Low';
   const riskColor = trafficLoad > 70 ? '#ef4444' : trafficLoad > 40 ? '#f59e0b' : '#10b981';
@@ -17,9 +17,9 @@ const RouteSummary = ({ routeData, routeQuery, isLoading }) => {
   const toCity = routeQuery?.split(/\s+to\s+/i)?.[1]?.trim() || 'Destination';
 
   return (
-    <div className="route-summary glass-panel relative" style={{position: 'relative'}}>
+    <div className="route-summary glass-panel relative" style={{ position: 'relative' }}>
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-panel/80 backdrop-blur-sm z-10 rounded-md" style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(17, 24, 40, 0.7)', zIndex: 10, backdropFilter: 'blur(4px)', borderRadius: '12px'}}>
+        <div className="absolute inset-0 flex items-center justify-center bg-panel/80 backdrop-blur-sm z-10 rounded-md" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(17, 24, 40, 0.7)', zIndex: 10, backdropFilter: 'blur(4px)', borderRadius: '12px' }}>
           <Loader2 className="animate-spin text-accent" size={32} color="#dc2626" />
         </div>
       )}
