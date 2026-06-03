@@ -1,13 +1,14 @@
 /* Global App Layout */
 .app-wrapper {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-main);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  padding-top: 90px;
 }
+
 
 .app-stack {
   width: 100%;
@@ -15,6 +16,10 @@
   flex-direction: column;
   gap: 40px;
   padding-bottom: 60px;
+}
+
+#hero-search, .results-view-header {
+  scroll-margin-top: 80px;
 }
 
 .dashboard-container {
@@ -78,6 +83,26 @@
   z-index: 10;
 }
 
+.back-to-home-btn {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.back-to-home-btn:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
 /* Dashboard Grid Layout */
 .dashboard-grid {
   display: flex;
@@ -96,86 +121,8 @@
   width: 100%;
 }
 
-.app-footer {
-  text-align: center;
-  padding: 60px 40px 40px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
-  margin-top: 60px;
-  background: var(--primary);
-  position: relative;
-  overflow: hidden;
- 
-}
+/* Footer styles moved to HelpFooter.css */
 
-.app-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.footer-help-section {
-  max-width: 600px;
-  margin: 0 auto 40px;
-  position: relative;
-  z-index: 1;
-}
-
-.footer-help-section h3 {
-  color: #FFFFFF;
-  font-size: 32px;
-  margin-bottom: 16px;
-  font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.footer-help-section p {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
-  margin-bottom: 24px;
-  font-size: 16px;
-}
-
-.help-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.help-link {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  font-size: 15px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.help-link:hover {
-  background: #FFFFFF;
-  color: var(--primary);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.separator {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.footer-bottom {
-  padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.7);
-}
 
 /* Animations */
 .animate-fade-in {
@@ -207,6 +154,9 @@
 }
 
 @media (max-width: 768px) {
+  .app-wrapper {
+    padding-top: 60px;
+  }
   .app-stack {
     gap: 30px;
   }

@@ -1,10 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   SEARCH OVERLAY — FULLY RESPONSIVE
-   Breakpoints:
-     > 1100px   : Desktop   — tree left, info right (side by side)
-     768–1100px : Tablet    — compact side by side
-     < 768px    : Mobile    — stacked vertically, tree small
-     < 480px    : Small mob — minimal tree, ultra compact
+   SEARCH OVERLAY — GLASSMORPHIC DESIGN SYSTEM (FULLY RESPONSIVE)
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Overlay Shell ───────────────────────────────────────────────── */
@@ -14,70 +9,123 @@
     left: 0;
     width: 100%;
     height: calc(100% - 80px);
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    background: rgba(246, 248, 250, 0.4);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    z-index: 10000;
-    animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow-y: auto;
-    padding: 16px 0 24px;
+    z-index: 9999;
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    padding: 20px;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Ambient Background Glows ─────────────────────────────────────── */
+.ambient-glow {
+    position: absolute;
+    width: min(500px, 60vw);
+    height: min(500px, 60vw);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 1;
+    animation: floatGlow 10s ease-in-out infinite alternate;
+}
+
+.ambient-glow-1 {
+    background: var(--primary);
+    top: 15%;
+    left: 10%;
+}
+
+.ambient-glow-2 {
+    background: #ff7300;
+    bottom: 15%;
+    right: 10%;
+    animation-delay: -5s;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(40px, 30px) scale(1.15); }
 }
 
 /* ── Card ────────────────────────────────────────────────────────── */
 .searching-card {
     width: 100%;
-    max-width: 1100px;
-    padding: 0 20px;
+    max-width: 920px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    padding: 36px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 6px;
+    gap: 24px;
+    box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    position: relative;
+    animation: cardScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ── Branding ────────────────────────────────────────────────────── */
+@keyframes cardScaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ── Card Header ─────────────────────────────────────────────────── */
+.searching-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 16px;
+}
+
 .branding-header {
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-size: 1.6rem;
     font-weight: 900;
-    color: var(--primary);
-    letter-spacing: -1.5px;
+    color: #111;
+    letter-spacing: -1px;
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-bottom: -4px;
 }
 
 .branding-header span {
     background: var(--primary);
     color: white;
-    padding: 2px 10px;
+    padding: 1px 8px;
     border-radius: 6px;
-    font-size: clamp(0.75rem, 2vw, 1.1rem);
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
-/* ── AI Badge ────────────────────────────────────────────────────── */
 .ai-badge {
-    background: rgba(216, 0, 0, 0.05);
+    background: rgba(216, 0, 0, 0.06);
     color: var(--primary);
-    padding: 5px 14px;
+    padding: 6px 14px;
     border-radius: 100px;
-    font-size: clamp(0.58rem, 1.5vw, 0.7rem);
-    font-weight: 700;
+    font-size: 0.65rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     display: flex;
     align-items: center;
     gap: 8px;
     border: 1px solid rgba(216, 0, 0, 0.1);
-    margin-bottom: 4px;
 }
 
 .ai-badge .pulse-dot {
@@ -85,32 +133,36 @@
     height: 6px;
     background: var(--primary);
     border-radius: 50%;
-    flex-shrink: 0;
     animation: pulse 1.5s infinite;
 }
 
-/* ── Content Layout — DESKTOP: side by side ──────────────────────── */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(216, 0, 0, 0.4); }
+    70% { transform: scale(1.2); opacity: 0.4; box-shadow: 0 0 0 6px rgba(216, 0, 0, 0); }
+    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(216, 0, 0, 0); }
+}
+
+/* ── Content Layout ──────────────────────────────────────────────── */
 .content-layout {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr;
+    gap: 40px;
     align-items: center;
-    justify-content: center;
-    gap: 3rem;
     width: 100%;
 }
 
-/* ── Tree Side ───────────────────────────────────────────────────── */
+/* ── Left Panel (Tree Scene & HUD scanner) ───────────────────────── */
 .growth-animation {
-    flex-shrink: 0;
-    width: 440px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .tree-container {
-    width: 440px;
-    height: 400px;
+    width: 320px;
+    height: 320px;
     position: relative;
     display: flex;
     align-items: center;
@@ -120,86 +172,172 @@
 .tree-container canvas {
     background: transparent !important;
     outline: none;
+    z-index: 2;
+}
+
+/* Futuristic HUD Scanner Rings */
+.hud-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.hud-ring-outer {
+    width: 300px;
+    height: 300px;
+    border: 1.5px dashed rgba(216, 0, 0, 0.12);
+    animation: rotateCW 50s linear infinite;
+}
+
+.hud-ring-inner {
+    width: 250px;
+    height: 250px;
+    border: 1px dotted rgba(216, 0, 0, 0.2);
+    animation: rotateCCW 30s linear infinite;
+}
+
+@keyframes rotateCW {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes rotateCCW {
+    from { transform: translate(-50%, -50%) rotate(360deg); }
+    to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/* Vertical Scanner Line */
+.hud-scan-line {
+    position: absolute;
+    left: 50%;
+    width: 270px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(216, 0, 0, 0) 0%, rgba(216, 0, 0, 0.45) 50%, rgba(216, 0, 0, 0) 100%);
+    box-shadow: 0 0 6px rgba(216, 0, 0, 0.3);
+    transform: translateX(-50%);
+    animation: scanVertical 4.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 3;
+}
+
+@keyframes scanVertical {
+    0%, 100% { top: 12%; opacity: 0.1; }
+    50% { top: 82%; opacity: 0.65; }
 }
 
 .growth-indicator {
     position: absolute;
-    bottom: 2px;
+    bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: clamp(0.6rem, 1.5vw, 0.82rem);
+    font-size: 0.72rem;
     font-weight: 900;
     color: var(--primary);
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     white-space: nowrap;
-    background: rgba(255, 255, 255, 0.85);
-    padding: 3px 14px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 4px 14px;
     border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    z-index: 4;
 }
 
-/* ── Info Side ───────────────────────────────────────────────────── */
+/* ── Right Panel (Details, Progress, Actions) ───────────────────── */
 .searching-info {
-    flex: 1;
-    min-width: 0;
-    max-width: 480px;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
 }
 
-.searching-info h2 {
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
+.info-header h2 {
+    font-size: 1.8rem;
     font-weight: 850;
-    margin-bottom: 0.5rem;
-    color: #1A1A1A;
-    letter-spacing: -1px;
+    margin-bottom: 6px;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
-/* ── Route Text ──────────────────────────────────────────────────── */
+/* Route Display tags */
 .route-text {
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-size: 0.95rem;
     font-weight: 700;
-    color: #444;
-    margin-bottom: 1rem;
+    color: #555;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.route-text span {
+.route-text .city {
     color: var(--primary);
-    background: rgba(216, 0, 0, 0.08);
-    padding: 3px 10px;
+    background: rgba(216, 0, 0, 0.06);
+    border: 1px solid rgba(216, 0, 0, 0.08);
+    padding: 4px 12px;
     border-radius: 8px;
     font-weight: 800;
-    font-family: 'Inter', sans-serif;
 }
 
-/* ── Progress Section ────────────────────────────────────────────── */
+.route-text .arrow {
+    display: flex;
+    align-items: center;
+    color: #888;
+}
+
+/* Progress HUD */
 .progress-section {
     width: 100%;
-    margin: 0.5rem 0 0.8rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .progress-header-row {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
 }
 
 .loading-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #999;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #888;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Bus Track */
+.progress-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.countdown-timer {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--primary);
+    background: rgba(216, 0, 0, 0.06);
+    border: 1px solid rgba(216, 0, 0, 0.08);
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+.percentage {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #111;
+}
+
+/* Bus Animation Track */
 .bus-track {
     width: 100%;
-    height: 28px;
+    height: 24px;
     position: relative;
     margin-bottom: -10px;
     z-index: 2;
@@ -214,62 +352,60 @@
     flex-direction: column;
     align-items: center;
     transition: left 1s linear;
-    animation: busDrive 0.5s infinite alternate ease-in-out;
+    animation: busDrive 0.4s infinite alternate ease-in-out;
 }
 
 @keyframes busDrive {
-    from { transform: translateX(-50%) translateY(0) rotate(0deg); }
-    to   { transform: translateX(-50%) translateY(-2px) rotate(1deg); }
+    from { transform: translateX(-50%) translateY(0); }
+    to   { transform: translateX(-50%) translateY(-2px); }
 }
 
 .bus-exhaust {
     width: 4px;
     height: 4px;
-    background: rgba(216, 0, 0, 0.2);
+    background: rgba(216, 0, 0, 0.25);
     border-radius: 50%;
     position: absolute;
-    left: -8px;
-    bottom: 2px;
+    left: -6px;
+    bottom: 1px;
     animation: exhaustCloud 0.8s infinite;
 }
 
 @keyframes exhaustCloud {
-    0%   { transform: scale(1) translateX(0); opacity: 0.5; }
-    100% { transform: scale(3) translateX(-20px); opacity: 0; }
+    0%   { transform: scale(1) translateX(0); opacity: 0.6; }
+    100% { transform: scale(2.5) translateX(-15px); opacity: 0; }
 }
 
-/* Progress Bar */
+/* Progress Track and Bar */
 .progress-bar-container {
     width: 100%;
-    height: 10px;
-    background: rgba(0, 0, 0, 0.06);
+    height: 8px;
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 100px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+    position: relative;
 }
 
 .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary) 0%, #FF4D4D 100%);
+    background: linear-gradient(90deg, var(--primary) 0%, #ff5252 100%);
     transition: width 1s linear;
-    box-shadow: 0 0 10px rgba(216, 0, 0, 0.3);
+    border-radius: 100px;
+    box-shadow: 0 0 8px rgba(216, 0, 0, 0.2);
 }
 
-/* ── Status Text ─────────────────────────────────────────────────── */
+/* Status message */
 .status-text {
-    font-size: clamp(0.75rem, 1.5vw, 0.85rem);
-    color: #495057;
+    font-size: 0.82rem;
+    color: #555;
     font-weight: 600;
     min-height: 1.2rem;
-    margin: 0.5rem 0 0.8rem 0;
-    letter-spacing: 0.3px;
+    margin: 2px 0;
 }
 
 .success-status {
-    color: #2E7D32;
+    color: #2e7d32;
     font-weight: 800;
-    text-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -277,265 +413,384 @@
 }
 
 @keyframes successPulse {
-    0%   { transform: scale(1); opacity: 1; }
-    50%  { transform: scale(1.02); opacity: 0.9; }
-    100% { transform: scale(1); opacity: 1; }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); opacity: 0.9; }
 }
 
-/* ── Insight Box ─────────────────────────────────────────────────── */
+/* Rotating Insights Box */
 .insight-box {
     width: 100%;
-    background: #f8f9fa;
-    color: #1a1a1a;
-    padding: clamp(0.8rem, 2vw, 1.2rem);
-    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 16px;
+    border-radius: 16px;
     text-align: left;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .insight-label {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--primary);
     margin-bottom: 4px;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .insight-text {
-    font-size: clamp(0.72rem, 1.5vw, 0.8rem);
+    font-size: 0.78rem;
     line-height: 1.5;
     color: #444;
     font-weight: 500;
 }
 
-/* ── Buttons ─────────────────────────────────────────────────────── */
-.get-data-btn {
-    margin-top: 10px;
-    background: var(--primary);
-    border: none;
-    color: white;
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s;
-    padding: 11px 32px;
+/* Actions inside column */
+.actions-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.scanning-indicator {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 12px 24px;
     border-radius: 100px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #666;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 8px 20px rgba(216, 0, 0, 0.2);
-    min-width: 180px;
 }
 
-.get-data-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(216, 0, 0, 0.3);
+.scanning-indicator .dot {
+    width: 8px;
+    height: 8px;
+    background: #888;
+    border-radius: 50%;
+    animation: blink 1.2s infinite;
 }
 
-.get-data-btn.blinking {
-    animation: pulse-blink 1.5s infinite;
-}
-
-@keyframes pulse-blink {
-    0%   { transform: scale(1);    box-shadow: 0 8px 20px rgba(216,0,0,0.2); }
-    50%  { transform: scale(1.04); box-shadow: 0 12px 28px rgba(216,0,0,0.4); }
-    100% { transform: scale(1);    box-shadow: 0 8px 20px rgba(216,0,0,0.2); }
-}
-
-.cancel-btn {
-    margin-top: 6px;
-    background: white;
-    border: 1px solid #e0e0e0;
-    color: #888;
-    font-size: clamp(0.7rem, 1.2vw, 0.8rem);
-    font-weight: 700;
+/* Action buttons */
+.get-data-btn {
+    flex: 1;
+    background: var(--primary);
+    border: none;
+    color: white;
+    font-size: 0.88rem;
+    font-weight: 800;
     cursor: pointer;
-    transition: all 0.25s;
-    padding: 7px 24px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 12px 28px;
     border-radius: 100px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 18px rgba(216, 0, 0, 0.2);
+}
+
+.get-data-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(216, 0, 0, 0.3);
+    background: #ff1a1a;
+}
+
+.get-data-btn.blinking {
+    animation: pulse-blink 1.8s infinite;
+}
+
+@keyframes pulse-blink {
+    0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(216,0,0,0.25); }
+    50% { transform: scale(1.03); box-shadow: 0 10px 24px rgba(216,0,0,0.45); }
+}
+
+.cancel-btn {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    padding: 12px 24px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
 }
 
 .cancel-btn:hover {
+    color: #111;
+    border-color: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* ── Side Advertisement ──────────────────────────────────────────── */
+.side-ad-container {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 210px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.side-ad-container:hover {
+    transform: translateY(-52%) scale(1.02);
+    box-shadow: 0 24px 48px rgba(216, 0, 0, 0.1);
+    border-color: rgba(216, 0, 0, 0.25);
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translate(30px, -50%); }
+    to   { opacity: 1; transform: translate(0, -50%); }
+}
+
+.ad-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
     color: var(--primary);
-    border-color: var(--primary);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(216, 0, 0, 0.1);
+    letter-spacing: 1.5px;
+    background: rgba(216, 0, 0, 0.06);
+    padding: 4px 10px;
+    border-radius: 100px;
+    width: fit-content;
 }
 
-/* ── Shared Keyframes ────────────────────────────────────────────── */
-@keyframes pulse {
-    0%   { transform: scale(1);   opacity: 1;   box-shadow: 0 0 0 0 rgba(216,0,0,0.4); }
-    70%  { transform: scale(1.2); opacity: 0.5; box-shadow: 0 0 0 8px rgba(216,0,0,0); }
-    100% { transform: scale(1);   opacity: 1;   box-shadow: 0 0 0 0 rgba(216,0,0,0); }
+.ad-brand {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -0.5px;
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS
-   ══════════════════════════════════════════════════════════════════ */
+.ad-highlight {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+    margin: -2px 0;
+}
 
-/* ── Tablet (768px – 1100px) ─────────────────────────────────────── */
-@media (max-width: 1100px) {
+.ad-highlight span {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    color: #555;
+    margin-top: 2px;
+    font-weight: 700;
+}
+
+.ad-text {
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.ad-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #2e7d32;
+    letter-spacing: 0.8px;
+}
+
+.ad-status .dot {
+    width: 6px;
+    height: 6px;
+    background: #2e7d32;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.ad-click-hint {
+    margin-top: 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: white;
+    background: var(--primary);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 10px rgba(216, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.side-ad-container:hover .ad-click-hint {
+    background: #ff1a1a;
+}
+
+.ad-visual {
+    margin-top: 8px;
+    color: var(--primary);
+    opacity: 0.08;
+    position: absolute;
+    bottom: -5px;
+    right: 5px;
+    transform: rotate(-15deg) scale(1.4);
+    pointer-events: none;
+}
+
+/* ── RESPONSIVE BREAKPOINTS ──────────────────────────────────────── */
+
+/* Tablet (768px – 1024px) */
+@media (max-width: 1024px) {
+    .searching-card {
+        max-width: 720px;
+        padding: 28px;
+        gap: 20px;
+    }
     .content-layout {
-        gap: 1.5rem;
+        gap: 28px;
     }
-
-    .growth-animation {
-        width: 360px;
-    }
-
     .tree-container {
-        width: 360px;
-        height: 340px;
+        width: 260px;
+        height: 260px;
     }
-
-    .searching-info {
-        max-width: 420px;
+    .hud-ring-outer {
+        width: 250px;
+        height: 250px;
+    }
+    .hud-ring-inner {
+        width: 210px;
+        height: 210px;
+    }
+    .hud-scan-line {
+        width: 230px;
+    }
+    .info-header h2 {
+        font-size: 1.5rem;
     }
 }
 
-/* ── Small Tablet / Large Mobile (768px) ─────────────────────────── */
+/* Mobile (under 768px) */
 @media (max-width: 768px) {
     .searching-overlay {
         top: 60px;
         height: calc(100% - 60px);
+        padding: 12px;
         align-items: flex-start;
-        padding: 12px 0 20px;
+        overflow-y: auto;
     }
 
     .searching-card {
-        gap: 4px;
-        padding: 0 16px;
+        padding: 20px;
+        gap: 16px;
+        border-radius: 20px;
     }
 
-    /* Stack vertically */
+    .searching-card-header {
+        padding-bottom: 12px;
+    }
+
+    .branding-header {
+        font-size: 1.3rem;
+    }
+
     .content-layout {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .growth-animation {
-        width: 100%;
-        max-width: 320px;
-    }
-
-    .tree-container {
-        width: 300px;
-        height: 260px;
-    }
-
-    .growth-indicator {
-        font-size: 0.6rem;
-        letter-spacing: 2px;
-        bottom: 0;
-    }
-
-    .searching-info {
-        max-width: 100%;
-        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 20px;
         text-align: center;
     }
 
-    .progress-header-row {
-        justify-content: center;
+    .growth-animation {
+        order: 1;
+    }
+
+    .tree-container {
+        width: 220px;
+        height: 220px;
+        margin: 0 auto;
+    }
+
+    .hud-ring-outer {
+        width: 210px;
+        height: 210px;
+    }
+
+    .hud-ring-inner {
+        width: 180px;
+        height: 180px;
+    }
+
+    .hud-scan-line {
+        width: 190px;
+    }
+
+    .searching-info {
+        order: 2;
+        text-align: left;
     }
 
     .route-text {
-        justify-content: center;
+        justify-content: flex-start;
     }
 
-    .get-data-btn {
+    .actions-container {
+        flex-direction: column;
         width: 100%;
-        max-width: 340px;
+        gap: 10px;
     }
 
-    .cancel-btn {
+    .scanning-indicator, .get-data-btn, .cancel-btn {
         width: 100%;
-        max-width: 340px;
+        flex: unset;
         text-align: center;
     }
 }
 
-/* ── Mobile (480px) ──────────────────────────────────────────────── */
+/* Very Small Mobile */
 @media (max-width: 480px) {
-    .searching-overlay {
-        padding: 8px 0 16px;
-    }
-
     .searching-card {
-        padding: 0 12px;
-        gap: 3px;
+        padding: 16px;
+        gap: 12px;
     }
 
-    .tree-container {
-        width: 240px;
-        height: 210px;
-    }
-
-    .growth-animation {
-        max-width: 260px;
-    }
-
-    .searching-info h2 {
+    .info-header h2 {
         font-size: 1.3rem;
     }
 
     .route-text {
         font-size: 0.85rem;
-        gap: 6px;
-        margin-bottom: 0.6rem;
     }
 
-    .progress-section {
-        margin: 0.3rem 0 0.5rem 0;
-    }
-
-    .insight-box {
-        padding: 0.75rem;
-    }
-
-    .insight-text {
-        font-size: 0.72rem;
-    }
-
-    .get-data-btn {
-        padding: 10px 20px;
+    .percentage {
         font-size: 0.8rem;
-        min-width: unset;
-    }
-
-    .cancel-btn {
-        font-size: 0.7rem;
-        padding: 6px 20px;
-    }
-}
-
-/* ── Very Small Mobile (360px) ───────────────────────────────────── */
-@media (max-width: 360px) {
-    .branding-header {
-        font-size: 1.2rem;
-    }
-
-    .tree-container {
-        width: 200px;
-        height: 180px;
-    }
-
-    .growth-animation {
-        max-width: 220px;
-    }
-
-    .searching-info h2 {
-        font-size: 1.15rem;
-    }
-
-    .route-text {
-        font-size: 0.78rem;
     }
 }

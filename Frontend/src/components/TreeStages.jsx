@@ -62,6 +62,7 @@ const TreeStages = ({ progress }) => {
     const leafMeshRef = useRef();
     const appleMeshRef = useRef();
     const seedRef = useRef();
+    const elapsedRef = useRef(0);
 
     const { branches, leaves, apples } = useMemo(() => {
         const generatedBranches = [];
@@ -165,8 +166,9 @@ const TreeStages = ({ progress }) => {
     const _tempMat = new THREE.Matrix4();
     const _tempQuat = new THREE.Quaternion();
 
-    useFrame((state) => {
-        const t = state.clock.getElapsedTime();
+    useFrame((state, delta) => {
+        elapsedRef.current += delta;
+        const t = elapsedRef.current;
 
         // Gentle organic sway
         if (groupRef.current) {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Bus } from "lucide-react";
+import { Bus, ArrowRight, Zap } from "lucide-react";
 import Scene from "./Scene";
 import "../styles/searchingoverlay.css";
 
-const TOTAL_DURATION = 8; // seconds — short splash; button unlocks as soon as API responds
+const TOTAL_DURATION = 300; // 5 minutes in seconds
 
 const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
     const [progress, setProgress] = useState(0);
@@ -13,6 +13,9 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
     const [apiData, setApiData] = useState(null);
     const [error, setError] = useState(null);
     const [timerDone, setTimerDone] = useState(false);
+    const [insights, setInsights] = useState([
+        { label: "AI Tip", text: "Analyzing optimal route..." }
+    ]);
 
     // Refs so intervals always read the latest values
     const startTimeRef = useRef(Date.now());
@@ -20,14 +23,7 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
 
     const isReady = apiData !== null && timerDone;
 
-    const getViaCities = (f, v, t) => {
-        let route = [];
-        if (f === "Chennai" && t === "Coimbatore") route = ["Vellore", "Salem", "Erode"];
-        if (v && !route.includes(v)) route.push(v);
-        return route;
-    };
-
-    const viaCities = getViaCities(from, via, to);
+    const viaCities = via ? [via] : [];
 
     const statuses = [
         "Initializing Neural Route Engine...",
@@ -42,14 +38,6 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
         "Finalizing smart route selection..."
     ];
 
-    const insights = [
-        { label: "AI Tip", text: "Routes analyzed by AI typically arrive 15% faster by avoiding mid-journey congestion hotspots." },
-        { label: "Did You Know?", text: "Tickmybus AI scans over 500 data points per second to ensure your journey is safe and on time." },
-        { label: "Travel Fact", text: "The Hyderabad to Vijayawada route is most scenic during the early morning AI-suggested slots." },
-        { label: "Smart Choice", text: "Choosing 'Eco-Routes' helps reduce carbon emissions by up to 12% without increasing travel time." },
-        { label: "Security", text: "Every booking is monitored by our 24/7 AI Security Layer for your peace of mind." }
-    ];
-
     // Growth stage label (0–4) based on progress
     const growthStage = Math.min(Math.floor(progress / 20), 4);
     const growthLabels = [
@@ -61,10 +49,21 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
     ];
 
     useEffect(() => {
-        // Lock body scroll
+        // Lock scroll
         document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
 
-        // ── Real-time progress clock (runs every 1 second) ──────────────────
+        // Fetch insights first
+        fetch("/api/search-data/")
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success" && data.insights) {
+                    setInsights(data.insights);
+                }
+            })
+            .catch(err => console.error("Error fetching insights:", err));
+
+        // ── Fixed 5-minute progress clock ──────────────────
         const progressInterval = setInterval(() => {
             const elapsed = (Date.now() - startTimeRef.current) / 1000;
             const newProgress = Math.min((elapsed / TOTAL_DURATION) * 100, 100);
@@ -78,17 +77,17 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
             }
         }, 1000);
 
-        // ── Rotate status messages ───────────────────────────────────────────
+        // ── Rotate status messages every 30s (10 statuses * 30s = 300s) ─────────────────
         const statusInterval = setInterval(() => {
             setStatusIndex((prev) => (prev + 1) % statuses.length);
-        }, 4000);
+        }, 30000);
 
-        // ── Rotate insight cards ─────────────────────────────────────────────
+        // ── Rotate insight cards every 60s (5 insights * 60s = 300s) ───────────────────
         const insightInterval = setInterval(() => {
-            setInsightIndex((prev) => (prev + 1) % insights.length);
-        }, 8000);
+            setInsightIndex((prev) => (prev + 1));
+        }, 60000);
 
-        // ── Fetch backend data ───────────────────────────────────────────────
+        // ── Fetch backend data (runs in background) ───────────────────────────
         const fetchData = async () => {
             try {
                 const response = await fetch("/api/route-analysis/", {
@@ -124,6 +123,7 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
             clearInterval(statusInterval);
             clearInterval(insightInterval);
             document.body.style.overflow = "auto";
+            document.documentElement.style.overflow = "auto";
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -138,31 +138,48 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
 
     const overlayContent = (
         <div className="searching-overlay">
-            <div className="searching-card">
-                <div className="branding-header">
-                    Tick MyBus <span>AI</span>
-                </div>
+            {/* Ambient Background Glows */}
+            <div className="ambient-glow ambient-glow-1"></div>
+            <div className="ambient-glow ambient-glow-2"></div>
 
-                <div className="ai-badge">
-                    <span className="pulse-dot"></span> NEURAL AI PROCESSING ENGINE
+            <div className="searching-card">
+                <div className="searching-card-header">
+                    <div className="branding-header">
+                        TickMyBus <span>AI</span>
+                    </div>
+
+                    <div className="ai-badge">
+                        <span className="pulse-dot"></span> NEURAL AI PROCESSING ENGINE
+                    </div>
                 </div>
 
                 <div className="content-layout">
+                    {/* LEFT PANEL: The 3D growth visualization & HUD */}
                     <div className="growth-animation">
                         <div className="tree-container">
+                            <div className="hud-ring hud-ring-outer"></div>
+                            <div className="hud-ring hud-ring-inner"></div>
+                            <div className="hud-scan-line"></div>
                             <Scene progress={progress} />
                             <div className="growth-indicator">{growthLabels[growthStage]}</div>
                         </div>
                     </div>
 
+                    {/* RIGHT PANEL: Route info, progress, analytics, and action buttons */}
                     <div className="searching-info">
-                        <h2>Finding Best Routes</h2>
-                        <div className="route-text">
-                            {from} {viaCities.map(city => (
-                                <React.Fragment key={city}>
-                                    <span>→</span> {city}
-                                </React.Fragment>
-                            ))} <span>→</span> {to}
+                        <div className="info-header">
+                            <h2>Finding Best Routes</h2>
+                            <div className="route-text">
+                                <span className="city">{from}</span>
+                                {viaCities.map(city => (
+                                    <React.Fragment key={city}>
+                                        <span className="arrow"><ArrowRight size={16} strokeWidth={3} /></span>
+                                        <span className="city">{city}</span>
+                                    </React.Fragment>
+                                ))}
+                                <span className="arrow"><ArrowRight size={16} strokeWidth={3} /></span>
+                                <span className="city">{to}</span>
+                            </div>
                         </div>
 
                         <div className="progress-section">
@@ -173,7 +190,7 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
                             {/* Bus animation track */}
                             <div className="bus-track">
                                 <div className="moving-bus" style={{ left: `${Math.min(progress, 97)}%` }}>
-                                    <Bus size={20} />
+                                    <Bus size={18} />
                                     <div className="bus-exhaust"></div>
                                 </div>
                             </div>
@@ -182,31 +199,58 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
                             <div className="progress-bar-container">
                                 <div className="progress-bar" style={{ width: `${progress}%` }}></div>
                             </div>
-
-
                         </div>
 
                         <p className="status-text">{statusText()}</p>
 
                         <div className="insight-box">
-                            <div className="insight-label">{insights[insightIndex].label}</div>
-                            <div className="insight-text">{insights[insightIndex].text}</div>
+                            <div className="insight-label">
+                                <Zap size={12} fill="currentColor" /> {insights[insightIndex % insights.length].label}
+                            </div>
+                            <div className="insight-text">{insights[insightIndex % insights.length].text}</div>
+                        </div>
+
+                        {/* Actions integrated inside the info side */}
+                        <div className="actions-container">
+                            {!isReady ? (
+                                <div className="scanning-indicator">
+                                    <span className="dot"></span> Scanning Network...
+                                </div>
+                            ) : (
+                                <button
+                                    className="get-data-btn blinking"
+                                    onClick={() => onDataReady(apiData)}
+                                >
+                                    <Zap size={18} fill="currentColor" /> Get Data
+                                </button>
+                            )}
+
+                            <button className="cancel-btn" onClick={onCancel}>
+                                Cancel Search
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <button
-                    className={`get-data-btn ${isReady ? "blinking" : ""}`}
-                    disabled={!isReady}
-                    onClick={() => onDataReady(apiData)}
-                    style={{ opacity: isReady ? 1 : 0.5, cursor: isReady ? "pointer" : "not-allowed" }}
-                >
-                    {isReady ? " Get Data" : "Scanning…"}
-                </button>
-
-                <button className="cancel-btn" onClick={onCancel}>
-                    Cancel Search
-                </button>
+            {/* Side Advertisement */}
+            <div className="side-ad-container" onClick={() => window.open('https://tickmybus.com', '_blank')} style={{ cursor: 'pointer' }}>
+                <div className="ad-label">Special Offer</div>
+                <div className="ad-content">
+                    <div className="ad-brand">TickMyBus</div>
+                    <div className="ad-highlight">0%<span> COMMISSION</span></div>
+                    <p className="ad-text">Enjoy zero hidden charges and the lowest prices guaranteed.</p>
+                    <div className="ad-status">
+                        <span className="dot"></span>
+                        LIVE BOOKING
+                    </div>
+                    <div className="ad-click-hint">
+                        Click here to book tickets
+                    </div>
+                </div>
+                <div className="ad-visual">
+                    <Bus size={32} />
+                </div>
             </div>
         </div>
     );

@@ -9,61 +9,26 @@ const SearchBox = ({ onResults }) => {
     const [showSuggestions, setShowSuggestions] = useState({ from: false, via: false, to: false });
     const [isSearching, setIsSearching] = useState(false);
 
-    const cities = [
-        "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
-        "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur",
-        "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris",
-        "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga",
-        "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
-        "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore",
-        "Viluppuram", "Virudhunagar", "Bangalore", "Hyderabad", "Vijayawada", "Pune",
-        "Mumbai", "Delhi", "Kochi", "Goa", "Mysore"
-    ];
-
-    const [popularSearches, setPopularSearches] = useState([
-        "Bangalore → Chennai",
-        "Hyderabad → Vijayawada",
-        "Pune → Mumbai",
-        "Delhi → Manali",
-        "Ahmedabad → Surat"
-    ]);
+    const [cities, setCities] = useState([]);
+    const [cityShortcuts, setCityShortcuts] = useState({});
+    const [popularSearches, setPopularSearches] = useState([]);
 
     useEffect(() => {
-        const fetchPopular = async () => {
+        const fetchSearchData = async () => {
             try {
-                const response = await fetch("/api/popular-searches/");
+                const response = await fetch("/api/search-data/");
                 const data = await response.json();
                 if (data.status === "success") {
+                    setCities(data.cities);
+                    setCityShortcuts(data.shortcuts);
                     setPopularSearches(data.popular_searches);
                 }
             } catch (error) {
-                console.error("Error fetching popular searches:", error);
+                console.error("Error fetching search data:", error);
             }
         };
-        fetchPopular();
+        fetchSearchData();
     }, []);
-
-    const cityShortcuts = {
-        "cbe": "Coimbatore",
-        "blr": "Bangalore",
-        "hyd": "Hyderabad",
-        "maa": "Chennai",
-        "bom": "Mumbai",
-        "del": "Delhi",
-        "pnq": "Pune",
-        "tjy": "Thanjavur",
-        "trichi": "Tiruchirappalli",
-        "try": "Tiruchirappalli",
-        "trz": "Tiruchirappalli",
-        "tpj": "Tiruchirappalli",
-        "tpy": "Tirupathur",
-        "vlr": "Vellore",
-        "slm": "Salem",
-        "mdu": "Madurai",
-        "tcr": "Tiruppur",
-        "kchi": "Kochi",
-        "cok": "Kochi"
-    };
 
     const filteredCities = (input) => {
         if (!input) return [];

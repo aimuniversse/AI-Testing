@@ -12,28 +12,42 @@ import ProfileModal from "./components/ProfileModal";
 // Route Analysis Components
 import Header from "./components/Header";
 import MapArea from "./components/MapArea";
+import LuggageShare from "./components/LuggageShare";
 import Charts from "./components/Charts";
 import BottomWidgets from "./components/BottomWidgets";
 import RouteInsights from "./components/RouteInsights";
-//import AreaPotentialMap from "./components/AreaPotentialMap";
 import PremiumReportPage from "./components/PremiumReportPage";
 import SearchingOverlay from "./components/SearchingOverlay";
+import HelpFooter from "./components/HelpFooter";
 
 import "./App.css";
 
 function App() {
   // States
   const [loading, setLoading] = useState(true);
-  const [results, setResults] = useState(null);
-
-  const [routeData, setRouteData] = useState(null);
-  const [routeQuery, setRouteQuery] = useState("Chennai to Coimbatore");
+  const [results, setResults] = useState(() => {
+    const saved = localStorage.getItem("results");
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [routeData, setRouteData] = useState(() => {
+    const saved = localStorage.getItem("routeData");
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [routeQuery, setRouteQuery] = useState(() => {
+    return localStorage.getItem("routeQuery") || "Chennai to Coimbatore";
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [hasSearched, setHasSearched] = useState(false);
-  const [viaCity, setViaCity] = useState("");
-  const [activeTab, setActiveTab] = useState("home");
+  const [hasSearched, setHasSearched] = useState(() => {
+    return localStorage.getItem("hasSearched") === "true";
+  });
+  const [viaCity, setViaCity] = useState(() => {
+    return localStorage.getItem("viaCity") || "";
+  });
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem("activeTab") || "home";
+  });
 
   // Auth States
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -46,21 +60,52 @@ function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  // Pending scroll target — resolved in useEffect after DOM paint
+  const [pendingScroll, setPendingScroll] = useState(null);
 
   // Splash screen timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);
-
     return () => clearTimeout(timer);
   }, []);
+
+  // Sync state to localStorage
+  useEffect(() => {
+    localStorage.setItem("hasSearched", hasSearched);
+    localStorage.setItem("activeTab", activeTab);
+    localStorage.setItem("routeQuery", routeQuery);
+    localStorage.setItem("viaCity", viaCity);
+    
+    if (results) localStorage.setItem("results", JSON.stringify(results));
+    else localStorage.removeItem("results");
+    
+    if (routeData) localStorage.setItem("routeData", JSON.stringify(routeData));
+    else localStorage.removeItem("routeData");
+  }, [hasSearched, activeTab, routeQuery, viaCity, results, routeData]);
+
+  // Scroll handler — runs after render when pendingScroll is set
+  useEffect(() => {
+    if (!pendingScroll) return;
+    if (pendingScroll === "bottom") {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    } else {
+      const el = document.getElementById(pendingScroll);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
+    setPendingScroll(null);
+  }, [pendingScroll]);
 
   // Auth Handlers
   const handleAuthClick = (isLogin = true) => {
     setAuthInitialMode(isLogin);
     setIsAuthModalOpen(true);
   };
+
 
   const handleLoginSuccess = (data) => {
     setUserData(data);
@@ -76,10 +121,21 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserData(null);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userData");
     setHasSearched(false);
     setActiveTab("home");
+    setRouteData(null);
+    setResults(null);
+    
+    // Clear all persistence
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userData");
+    localStorage.removeItem("hasSearched");
+    localStorage.removeItem("activeTab");
+    localStorage.removeItem("routeQuery");
+    localStorage.removeItem("viaCity");
+    localStorage.removeItem("results");
+    localStorage.removeItem("routeData");
+    
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -185,6 +241,18 @@ function App() {
     };
   }, [hasSearched, routeQuery, isLoggedIn, viaCity]);
 
+  // Scroll utility: scrolls .app-wrapper (the real scroll container) to an element
+  const scrollToElement = (elementId) => {
+    const wrapper = document.querySelector(".app-wrapper");
+    const el = document.getElementById(elementId);
+    if (wrapper && el) {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const scrollOffset = wrapper.scrollTop + (elRect.top - wrapperRect.top) - 80;
+      wrapper.scrollTo({ top: scrollOffset, behavior: "smooth" });
+    }
+  };
+
   // Navbar handlers
   const handleHomeClick = () => {
     setHasSearched(false);
@@ -198,29 +266,13 @@ function App() {
       return;
     }
     setActiveTab("search");
-    if (!hasSearched) {
-      const searchBox = document.getElementById("hero-search");
-      if (searchBox) {
-        searchBox.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    } else {
-      const headerSearch = document.getElementById("header-search");
-      if (headerSearch) {
-        headerSearch.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }
+    setPendingScroll(hasSearched ? "header-search" : "hero-search");
   };
 
   const handleHelpClick = () => {
+    if (hasSearched) setHasSearched(false);
     setActiveTab("help");
-    const footer = document.getElementById("app-footer");
-    if (footer) {
-      footer.scrollIntoView({ behavior: "smooth" });
-    }
+    setPendingScroll("bottom");
   };
 
   return (
@@ -270,9 +322,9 @@ function App() {
         <div className="results-view-header" id="header-search">
           {/*<Header onAnalyze={analyzeRoute} isLoading={isLoading} /> */}
 
-          <div className="app-section pt-4">
+          <div className="app-section">
             <button
-              className="text-xs font-bold text-primary flex items-center gap-1 hover:underline"
+              className="back-to-home-btn"
               onClick={() => setHasSearched(false)}
             >
               ← Back to Home
@@ -319,13 +371,25 @@ function App() {
             />
           </section>
 
-          {/* Area Potential Map */}
-          {/* <section className="app-section potential-map-section animate-fade-in-up">
-            <AreaPotentialMap
-              routeData={routeData}
-              isLoading={isLoading}
-            />
-          </section> */}
+          {/* Luggage Share */}
+          {routeData && (
+            <section className="app-section luggage-section animate-fade-in-up">
+              <div className="section-header">
+                <h2 className="section-title">Luggage &amp; Parcel Share</h2>
+              </div>
+              <LuggageShare
+                routeData={routeData}
+                sourceName={
+                  routeData?.population_data?.source?.name ||
+                  routeQuery?.split(' to ')[0]?.trim()
+                }
+                destName={
+                  routeData?.population_data?.destination?.name ||
+                  routeQuery?.split(' to ')[1]?.trim()
+                }
+              />
+            </section>
+          )}
 
           {/* Dashboard */}
           <section className="app-section dashboard-section animate-fade-in-up">
@@ -372,26 +436,7 @@ function App() {
       )}
 
       {/* Footer / Help Section */}
-      {!hasSearched && (
-        <footer className="app-footer" id="app-footer">
-          <div className="footer-help-section">
-            <h3>Need Help?</h3>
-            <p>Get the most out of our AI-powered route intelligence. Whether you're looking for new route opportunities or analyzing existing ones, we're here to help.</p>
-            <div className="help-links">
-              <a href="mailto:support@tickmybus.com" className="help-link">Contact Support</a>
-              <span className="separator">|</span>
-              <a href="#" className="help-link">Documentation</a>
-              <span className="separator">|</span>
-              <a href="#" className="help-link">FAQs</a>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>
-              © {new Date().getFullYear()} Route Analysis AI | Powered by AIM UNIVERSSE
-            </p>
-          </div>
-        </footer>
-      )}
+      {!hasSearched && <HelpFooter />}
     </div>
   );
 }

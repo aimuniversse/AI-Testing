@@ -10,7 +10,7 @@ const Scene = ({ progress }) => {
         <Canvas
             shadows
             onCreated={({ gl }) => {
-                gl.shadowMap.type = THREE.PCFSoftShadowMap;
+                gl.shadowMap.type = THREE.PCFShadowMap;
             }}
             camera={{ position: [0, 2, 13], fov: 46 }}
             gl={{ 

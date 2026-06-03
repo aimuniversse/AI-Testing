@@ -13,7 +13,7 @@ from .models import (
     ParcelService, SuggestedRoute, RouteAnalysisCache, PopularSearch
 )
 from .ai_fallback import generate_route_analysis
-from .route_engine import search_city, get_osrm_route, apply_verified_overrides
+from .route_engine import search_city, get_osrm_route, apply_verified_overrides, load_cities_data
 from django.utils import timezone
 from datetime import timedelta
 
@@ -176,7 +176,6 @@ def analyze_route_api(request):
         
         print(f"DEBUG: Success! Returning AI data.")
         return Response(response_data)
-
     except Exception as e:
         import traceback
         traceback.print_exc()
@@ -188,6 +187,33 @@ def analyze_route_api(request):
         return Response({
             "status": "error",
             "message": f"Internal server error: {str(e)}"
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def get_search_data(request):
+    """
+    Returns the city list and optional shortcuts for frontend autocomplete.
+    """
+    try:
+        exact_map, _ = load_cities_data()
+        cities = sorted(exact_map.keys(), key=lambda name: name.lower())
+        return Response({
+            "status": "success",
+            "cities": cities,
+            "shortcuts": {},
+            "popular_searches": [
+                "Bangalore → Chennai",
+                "Hyderabad → Vijayawada",
+                "Pune → Mumbai",
+                "Delhi → Manali",
+                "Ahmedabad → Surat"
+            ]
+        })
+    except Exception as e:
+        return Response({
+            "status": "error",
+            "message": str(e)
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
