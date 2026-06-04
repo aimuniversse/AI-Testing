@@ -47,8 +47,11 @@ const SearchBox = ({ onResults }) => {
 
     const resolveCity = (name) => {
         if (!name) return "";
-        const lower = name.trim().toLowerCase();
-        return cityShortcuts[lower] || name;
+        const trimmed = name.trim();
+        const lower = trimmed.toLowerCase();
+        if (cityShortcuts[lower]) return cityShortcuts[lower];
+        const exactMatch = cities.find(city => city.toLowerCase() === lower);
+        return exactMatch || trimmed;
     };
 
     const handleSearch = () => {
@@ -56,11 +59,24 @@ const SearchBox = ({ onResults }) => {
         const to = resolveCity(toCity);
         const via = resolveCity(viaCity);
 
-        if (from && to) {
-            if (onResults) onResults(null, `${from} to ${to}`, via);
-        } else {
+        if (!from || !to) {
             alert("Please enter both source and destination cities.");
+            return;
         }
+
+        const isValidCity = (city) => cities.some(c => c.toLowerCase() === city.toLowerCase());
+
+        if (!isValidCity(from) || !isValidCity(to)) {
+            alert("Please select a valid source and destination from the city suggestions.");
+            return;
+        }
+
+        if (via && !isValidCity(via)) {
+            alert("Please select a valid via city from the suggestions or leave it blank.");
+            return;
+        }
+
+        if (onResults) onResults(null, `${from} to ${to}`, via);
     };
 
     return (

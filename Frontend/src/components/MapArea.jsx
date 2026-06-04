@@ -36,11 +36,29 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const destPosition = { left: 17.6, top: 94 };
 
   const extractItemsForCity = (items, cityName) => {
+<<<<<<< HEAD
     if (!items || !cityName || !Array.isArray(items)) return [];
     const cn = cityName.split(',')[0].trim().toLowerCase();
     return items.filter(item =>
       typeof item === 'string' && item.toLowerCase().includes(cn)
     ).slice(0, 3);
+=======
+    if (!Array.isArray(items) || !cityName) return [];
+    const cn = cityName.split(',')[0].trim().toLowerCase();
+
+    // Normalize items to strings safely (handle objects, nulls, numbers)
+    const normalized = items.map(it => {
+      if (!it && it !== 0) return '';
+      if (typeof it === 'string') return it;
+      if (typeof it === 'object') {
+        // Prefer common text fields when item is an object
+        return (it.name || it.title || it.place || it.city || it.description || '').toString();
+      }
+      return String(it);
+    });
+
+    return normalized.filter(text => text.toLowerCase().includes(cn)).slice(0, 3);
+>>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
   };
 
   const srcCity = String(sourceName || '').split(',')[0].trim();

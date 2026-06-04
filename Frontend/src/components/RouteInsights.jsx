@@ -63,9 +63,16 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     const srcCity = srcName.split(',')[0].trim().toLowerCase();
     const dstCity = dstName.split(',')[0].trim().toLowerCase();
     const formatSpot = (s) => {
+<<<<<<< HEAD
       if (typeof s === 'string') return s.trim();
       if (s && typeof s === 'object' && s.name) return String(s.name).trim();
       return String(s || '').trim();
+=======
+      if (s === null || s === undefined) return '';
+      if (typeof s === 'string') return s.trim();
+      if (typeof s === 'object') return (s.name || s.title || s.place || s.city || s.description || '').toString().trim();
+      return String(s).trim();
+>>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
     };
 
     const spotsToUse = [];
@@ -73,8 +80,13 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     // Priority 1: Use all available real tourist spots from backend (up to 5)
     allSpots.forEach(spot => {
       if (spotsToUse.length < 5) {
+<<<<<<< HEAD
         const name = formatSpot(spot);
         const sName = name.toLowerCase();
+=======
+        const sRaw = formatSpot(spot);
+        const sName = sRaw.toLowerCase();
+>>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
         let val = 65; // Default for route spots
         let cityType = 'ROUTE';
 
@@ -90,7 +102,11 @@ const RouteInsights = ({ routeQuery, routeData }) => {
         const existingCount = spotsToUse.filter(s => s.cityType === cityType).length;
         if (existingCount > 0) val = val * (1 - (existingCount * 0.1));
 
+<<<<<<< HEAD
         spotsToUse.push({ name, cityType, val });
+=======
+        spotsToUse.push({ name: sRaw, cityType, val });
+>>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
       }
     });
 
