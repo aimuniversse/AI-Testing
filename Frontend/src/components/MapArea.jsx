@@ -32,11 +32,21 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const destPosition = { left: 17.6, top: 94 };
 
   const extractItemsForCity = (items, cityName) => {
-    if (!items || !cityName) return [];
+    if (!Array.isArray(items) || !cityName) return [];
     const cn = cityName.split(',')[0].trim().toLowerCase();
-    return items.filter(item =>
-      item.toLowerCase().includes(cn)
-    ).slice(0, 3);
+
+    // Normalize items to strings safely (handle objects, nulls, numbers)
+    const normalized = items.map(it => {
+      if (!it && it !== 0) return '';
+      if (typeof it === 'string') return it;
+      if (typeof it === 'object') {
+        // Prefer common text fields when item is an object
+        return (it.name || it.title || it.place || it.city || it.description || '').toString();
+      }
+      return String(it);
+    });
+
+    return normalized.filter(text => text.toLowerCase().includes(cn)).slice(0, 3);
   };
 
   const srcCity = sourceName.split(',')[0].trim();

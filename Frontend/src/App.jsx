@@ -220,7 +220,17 @@ function App() {
         }
       } else {
         consecutiveFailures.current += 1;
-        console.warn(`Background sync returned ${response.status} (${consecutiveFailures.current}/2 failures)`);
+        let backendMsg = "";
+        try {
+          const errorData = await response.json();
+          backendMsg = errorData.message || errorData.error || "";
+        } catch (e) {
+          backendMsg = "";
+        }
+        console.warn(
+          `Background sync returned ${response.status} (${consecutiveFailures.current}/2 failures)` +
+            (backendMsg ? `: ${backendMsg}` : "")
+        );
       }
     } catch (err) {
       consecutiveFailures.current += 1;
