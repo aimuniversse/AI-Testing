@@ -27,11 +27,11 @@ const heroImage = "file:///C:/Users/DELL/.gemini/antigravity/brain/6f074f9e-ba21
 
 // ─── StateVisitorsPanel ─────────────────────────────────────────────────────
 function StateVisitorsPanel({ demandDistribution = [], lastSyncTime }) {
-  const [activeIdx, setActiveIdx]     = useState(0);
-  const [search,    setSearch]        = useState('');
-  const [sortBy,    setSortBy]        = useState('visitors'); // 'visitors' | 'share'
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [search, setSearch] = useState('');
+  const [sortBy, setSortBy] = useState('visitors'); // 'visitors' | 'share'
   const [hoveredCity, setHoveredCity] = useState(null);
-  const [animated,  setAnimated]      = useState(false);
+  const [animated, setAnimated] = useState(false);
 
   // Re-trigger bar animation whenever the active tab changes
   useEffect(() => {
@@ -59,9 +59,9 @@ function StateVisitorsPanel({ demandDistribution = [], lastSyncTime }) {
     { accent: '#ec4899', soft: '#fdf2f8', ring: '#db2777' },
   ];
 
-  const activeState  = demandDistribution[activeIdx];
-  const color        = palette[activeIdx % palette.length];
-  const rawCities    = activeState?.top_cities || activeState?.cities || [];
+  const activeState = demandDistribution[activeIdx];
+  const color = palette[activeIdx % palette.length];
+  const rawCities = activeState?.top_cities || activeState?.cities || [];
 
   // Filter + sort
   const filtered = rawCities
@@ -73,12 +73,12 @@ function StateVisitorsPanel({ demandDistribution = [], lastSyncTime }) {
     );
 
   const maxVisitors = Math.max(...rawCities.map(c => c.visitor_count || 0), 1);
-  const totalShare  = demandDistribution.reduce((s, d) => s + (d.percentage || 0), 0);
+  const totalShare = demandDistribution.reduce((s, d) => s + (d.percentage || 0), 0);
 
   // Radial ring SVG
   const R = 44, CX = 50, CY = 50;
   const circ = 2 * Math.PI * R;
-  const pct  = (activeState?.percentage || 0) / Math.max(totalShare, 100);
+  const pct = (activeState?.percentage || 0) / Math.max(totalShare, 100);
   const dash = pct * circ;
 
   return (
@@ -91,9 +91,9 @@ function StateVisitorsPanel({ demandDistribution = [], lastSyncTime }) {
             <Map size={22} />
           </div>
           <div>
-           <h2 className="svp-heading">Top Visitors by State</h2>
+            <h2 className="svp-heading">Top Visitors by State</h2>
             <p className="svp-subheading">Visitor distribution by state with share and visitor count</p>
-           
+
           </div>
         </div>
         <div className="svp-sync-badge">
@@ -291,8 +291,8 @@ function StateVisitorsPanel({ demandDistribution = [], lastSyncTime }) {
 
 export default function PremiumReportPage({ routeData, isLoading }) {
 
-  const routeName = Array.isArray(routeData?.route_summary?.path) 
-    ? routeData.route_summary.path.join(' → ') 
+  const routeName = Array.isArray(routeData?.route_summary?.path)
+    ? routeData.route_summary.path.join(' → ')
     : (routeData?.route_summary?.path || "Coimbatore to Chennai");
   const [formData, setFormData] = useState({ name: '', busTravels: '', contactNo: '', message: '' });
   const [formStatus, setFormStatus] = useState(null); // null | 'success' | 'error'
@@ -537,9 +537,15 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
     if (hasValue(areaSeg.job_business_areas)) {
       const businessScore = corridorPot.business ? ` (Potential: ${corridorPot.business}%)` : "";
+      // get up 2
+      const business = Array.isArray(areaSeg.job_business_areas)
+        ? areaSeg.job_business_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        : (areaSeg.job_business_areas?.name ?? areaSeg.job_business_areas ?? '');
+
+
       items.push({
-        title: 'Job & Business',
-        content: `${getFirstName(areaSeg.job_business_areas)}${businessScore}`,
+        title: 'Business',
+        content: `${getFirstName(business)}${businessScore}`,
         icon: <Briefcase />,
         color: 'orange'
       });
@@ -547,9 +553,15 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
     if (hasValue(areaSeg.student_areas)) {
       const studentScore = corridorPot.student ? ` (Potential: ${corridorPot.student}%)` : "";
+      //get up 2 
+      const areas = Array.isArray(areaSeg.student_areas)
+        ? areaSeg.student_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        : (areaSeg.student_areas?.name ?? areaSeg.student_areas ?? '');
+
+      
       items.push({
         title: 'Education Hubs',
-        content: `${getFirstName(areaSeg.student_areas)}${studentScore}`,
+        content: `${(areas)}${studentScore}`,
         icon: <GraduationCap />,
         color: 'purple'
       });
@@ -558,10 +570,10 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     if (hasValue(areaSeg.tourist_places)) {
       const touristScore = corridorPot.tourist ? ` (Potential: ${corridorPot.tourist}%)` : "";
       // Get up to 2 names
-      const places = Array.isArray(areaSeg.tourist_places) 
-        ? areaSeg.tourist_places.slice(0, 2).map(p => p?.name ?? p ?? '').join(', ')
+      const places = Array.isArray(areaSeg.tourist_places)
+        ? areaSeg.tourist_places.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
         : (areaSeg.tourist_places?.name ?? areaSeg.tourist_places ?? '');
-        
+
       items.push({
         title: 'Tourist Hotspots',
         content: `${places}${touristScore}`,
@@ -571,15 +583,15 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     }
 
     // Add a 4th card from a second business area if available
-    if (items.length < 4 && Array.isArray(areaSeg.job_business_areas) && areaSeg.job_business_areas.length > 1) {
-      const entry = areaSeg.job_business_areas[1];
-      items.push({
-        title: 'Industrial Center',
-        content: entry?.name ?? entry ?? '',
-        icon: <Factory />,
-        color: 'blue'
-      });
-    }
+    // if (items.length < 4 && Array.isArray(areaSeg.job_business_areas) && areaSeg.job_business_areas.length > 1) {
+    //   const entry = areaSeg.job_business_areas[1];
+    //   items.push({
+    //     title: 'Industrial Center',
+    //     content: entry?.name ?? entry ?? '',
+    //     icon: <Factory />,
+    //     color: 'blue'
+    //   });
+    // }
 
     // Fallbacks if API returned no usable segmentation data
     const fallbacks = [
@@ -599,7 +611,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     const pathData = routeData.route_summary.path;
     const cities = Array.isArray(pathData) ? pathData : pathData.split(' → ').map(c => c.trim());
     const segments = Array.isArray(routeData.distance_details) ? routeData.distance_details : [];
-    
+
     // Create a cumulative distance map
     const cumulativeDistances = [0];
     let currentTotal = 0;
@@ -607,8 +619,8 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     for (let i = 0; i < cities.length - 1; i++) {
       const from = cities[i];
       const to = cities[i + 1];
-      const segment = segments.find(s => 
-        (s.segment?.includes(from) && s.segment?.includes(to)) || 
+      const segment = segments.find(s =>
+        (s.segment?.includes(from) && s.segment?.includes(to)) ||
         (s.segment?.includes(to) && s.segment?.includes(from))
       );
 
@@ -755,7 +767,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-blue-main"></span>
                     <span className="city-name">{popData.source.name}</span>
                   </div> <h5>City Population</h5>
-                  <div className="pop-badge bg-blue-light text-blue-main">{((popData.source.count || popData.source.population || 0) ).toFixed(0)}</div>
+                  <div className="pop-badge bg-blue-light text-blue-main">{((popData.source.count || popData.source.population || 0)).toFixed(0)}</div>
                 </div>
               )}
 
@@ -768,7 +780,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-purple-main"></span>
                     <span className="city-name">{popData.via.name}</span>
                   </div> <h5>City Population</h5>
-                  <div className="pop-badge bg-purple-light text-purple-main">{((popData.via.count || popData.via.population || 0) ).toFixed(0)}</div>
+                  <div className="pop-badge bg-purple-light text-purple-main">{((popData.via.count || popData.via.population || 0)).toFixed(0)}</div>
                 </div>
               )}
 
@@ -782,7 +794,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="city-name">{popData.destination.name}</span>
                   </div>
                   <h5>City Population</h5>
-                  <div className="pop-badge bg-green-light text-green-main">{((popData.destination.count || popData.destination.population || 0) ).toFixed(0)}</div>
+                  <div className="pop-badge bg-green-light text-green-main">{((popData.destination.count || popData.destination.population || 0)).toFixed(0)}</div>
                 </div>
               )}
             </div>
@@ -797,12 +809,12 @@ export default function PremiumReportPage({ routeData, isLoading }) {
               <div className="total-right">
                 <div className="vertical-dotted-sep"></div>
                 <span className="total-value">
-                  {(((popData.source?.count || popData.source?.population || 0) + (popData.via?.count || popData.via?.population || 0) + (popData.destination?.count || popData.destination?.population || 0)) ).toFixed(0)}
+                  {(((popData.source?.count || popData.source?.population || 0) + (popData.via?.count || popData.via?.population || 0) + (popData.destination?.count || popData.destination?.population || 0))).toFixed(0)}
                 </span>
               </div>
             </div>
           </section>
-           {/* Potential of the Area */}
+          {/* Potential of the Area */}
           <section className="analysis-section-box area-potential-container">
             <div className="visitor-header-flex">
               <div className="visitor-title-box">
@@ -892,7 +904,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
               <div className="icon-wrap bg-pink-light"><Calendar className="text-pink" /></div>
               <div>
                 <h2>Total Visitor Count</h2>
-                <p className="subtitle-small">Overview of yearly and daily visitors</p> 
+                <p className="subtitle-small">Overview of yearly and daily visitors</p>
               </div>
             </div>
             <div className="visitor-graph-visual">
@@ -922,7 +934,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                 <span>Both Places Total Annual Visitor Count</span>
               </div>
               <div className="stat-value">
-                {(((Number(visitors.source?.yearly_total) || 0) + (Number(visitors.destination?.yearly_total) || 0)) ).toFixed(0)}
+                {(((Number(visitors.source?.yearly_total) || 0) + (Number(visitors.destination?.yearly_total) || 0))).toFixed(0)}
               </div>
               <div className="stat-underline"></div>
             </div>
@@ -933,7 +945,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                 <span>Both Places Total Daily Visitor Count</span>
               </div>
               <div className="stat-value">
-                {(((Number(visitors.source?.daily_normal) || 0) + (Number(visitors.destination?.daily_normal) || 0)) ).toFixed(0)}
+                {(((Number(visitors.source?.daily_normal) || 0) + (Number(visitors.destination?.daily_normal) || 0))).toFixed(0)}
               </div>
               <div className="stat-underline"></div>
             </div>
@@ -944,7 +956,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                 <span>Both Places Total Daily Peak Visitor Count</span>
               </div>
               <div className="stat-value">
-                {(((Number(visitors.source?.daily_peak) || 0) + (Number(visitors.destination?.daily_peak) || 0)) ).toFixed(0)}
+                {(((Number(visitors.source?.daily_peak) || 0) + (Number(visitors.destination?.daily_peak) || 0))).toFixed(0)}
               </div>
               <div className="stat-underline"></div>
             </div>
@@ -968,7 +980,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                 <div key={idx} className="attraction-item-row">
                   <div className="attraction-main">
                     <div className="attraction-img-circle">
-                      
+
                       {idx === 0 ? <Mountain size={24} className="text-pink" /> : <Activity size={24} className="text-pink" />}
                     </div>
                     <span className="attraction-name">{item.name}</span>
@@ -977,13 +989,13 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <div className="stat-sub">
                       <Users size={14} className="text-pink" />
                       <h5>Annual Visiter Count</h5>
-                      <span>{((Number(item.data?.yearly_total) || 0) ).toFixed(0)}</span>
+                      <span>{((Number(item.data?.yearly_total) || 0)).toFixed(0)}</span>
                     </div>
                     <div className="stat-sep"></div>
                     <div className="stat-sub">
                       <Sun size={14} className="text-pink" />
                       <h5> Daily Visitor Count</h5>
-                      <span>{((Number(item.data?.daily_normal) || 0) ).toFixed()}</span>
+                      <span>{((Number(item.data?.daily_normal) || 0)).toFixed()}</span>
                     </div>
                   </div>
                   <ChevronRight className="text-slate-light" size={20} />

@@ -16,8 +16,17 @@ const SearchBox = ({ onResults }) => {
     useEffect(() => {
         const fetchSearchData = async () => {
             try {
+                console.log("[SearchBox] Fetching search data from /api/search-data/");
                 const response = await fetch("/api/search-data/");
+                
+                if (!response.ok) {
+                    console.error(`[SearchBox] API returned status ${response.status}`);
+                    return;
+                }
+                
                 const data = await response.json();
+                console.log("[SearchBox] Search data received:", data);
+                
                 if (data.status === "success") {
                     setCities(data.cities);
                     setCityShortcuts(data.shortcuts);

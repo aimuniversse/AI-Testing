@@ -205,11 +205,16 @@ function App() {
     if (!source || !destination) return;
 
     try {
+      const requestBody = { source, destination, via: viaCity };
+      console.log("[Background Sync] Sending request:", requestBody);
+
       const response = await fetch("/api/route-analysis/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source, destination, via: viaCity }),
+        body: JSON.stringify(requestBody),
       });
+
+      console.log(`[Background Sync] Response status: ${response.status}`);
 
       if (response.ok) {
         const result = await response.json();

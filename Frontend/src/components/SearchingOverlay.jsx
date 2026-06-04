@@ -95,16 +95,22 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
             }
 
             try {
+                const requestBody = { source: from, destination: to, via: via || "" };
+                console.log("[API Request] Sending to /api/route-analysis/:", requestBody);
+
                 const response = await fetch("/api/route-analysis/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ source: from, destination: to, via: via || "" }),
+                    body: JSON.stringify(requestBody),
                 });
+
+                console.log(`[API Response] Status: ${response.status}`);
 
                 if (!response.ok) {
                     let errorMsg = "Failed to fetch route analysis";
                     try {
                         const errorData = await response.json();
+                        console.error("[API Error Response]:", errorData);
                         errorMsg = errorData.message || errorMsg;
                     } catch (e) { /* not JSON */ }
                     throw new Error(errorMsg);
