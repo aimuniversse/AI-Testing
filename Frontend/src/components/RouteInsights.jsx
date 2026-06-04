@@ -63,16 +63,10 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     const srcCity = srcName.split(',')[0].trim().toLowerCase();
     const dstCity = dstName.split(',')[0].trim().toLowerCase();
     const formatSpot = (s) => {
-<<<<<<< HEAD
-      if (typeof s === 'string') return s.trim();
-      if (s && typeof s === 'object' && s.name) return String(s.name).trim();
-      return String(s || '').trim();
-=======
       if (s === null || s === undefined) return '';
       if (typeof s === 'string') return s.trim();
       if (typeof s === 'object') return (s.name || s.title || s.place || s.city || s.description || '').toString().trim();
       return String(s).trim();
->>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
     };
 
     const spotsToUse = [];
@@ -80,13 +74,8 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     // Priority 1: Use all available real tourist spots from backend (up to 5)
     allSpots.forEach(spot => {
       if (spotsToUse.length < 5) {
-<<<<<<< HEAD
-        const name = formatSpot(spot);
-        const sName = name.toLowerCase();
-=======
         const sRaw = formatSpot(spot);
         const sName = sRaw.toLowerCase();
->>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
         let val = 65; // Default for route spots
         let cityType = 'ROUTE';
 
@@ -102,11 +91,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
         const existingCount = spotsToUse.filter(s => s.cityType === cityType).length;
         if (existingCount > 0) val = val * (1 - (existingCount * 0.1));
 
-<<<<<<< HEAD
-        spotsToUse.push({ name, cityType, val });
-=======
         spotsToUse.push({ name: sRaw, cityType, val });
->>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
       }
     });
 
@@ -196,6 +181,13 @@ const RouteInsights = ({ routeQuery, routeData }) => {
 
   const CustomAxisTick = ({ payload, x, y, cx, cy, ...rest }) => {
     const { value } = payload;
+    const angle = Math.atan2(y - cy, x - cx);
+    // Apply larger offset ONLY to the top point to prevent interference
+    const isTopPoint = Math.abs(angle + Math.PI / 2) < 0.1;
+    const radiusOffset = isTopPoint ? 35 : 10;
+    const newX = x + Math.cos(angle) * radiusOffset;
+    const newY = y + Math.sin(angle) * radiusOffset;
+
     // Split the label into words and wrap if needed
     const words = value.split(' ');
     const maxChars = 10;
@@ -213,13 +205,13 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     if (currentLine) lines.push(currentLine.trim());
 
     return (
-      <g transform={`translate(${x},${y})`}>
+      <g transform={`translate(${newX},${newY})`}>
         {lines.map((line, i) => (
           <text
             key={i}
             x={0}
             y={i * 11}
-            textAnchor={x > cx ? 'start' : (x < cx ? 'end' : 'middle')}
+            textAnchor={newX > cx ? 'start' : (newX < cx ? 'end' : 'middle')}
             dominantBaseline="central"
             fill="var(--text-secondary)"
             style={{ fontSize: '9px', fontWeight: '600' }}
@@ -268,8 +260,10 @@ const RouteInsights = ({ routeQuery, routeData }) => {
                   <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-secondary)', fontSize: 11, fontWeight: 600 }} width={80} />
                   <Tooltip
                     cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                    contentStyle={{ borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}
-                    formatter={(value) => [`${value} Million`, 'Population']}
+                    contentStyle={{ borderRadius: '12px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)', minWidth: '150px', padding: '8px' }}
+                    labelStyle={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '2px' }}
+                    itemStyle={{ fontSize: '13px', padding: '0' }}
+                    formatter={(value) => [`${(value * 1000000).toLocaleString()}`, 'Population']}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={16}>
                     {popData.map((entry, index) => (
@@ -383,7 +377,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
             </div>
             <div className="insight-card-content" style={{ width: '100%', minWidth: '0px' }}>
               <ResponsiveContainer width="100%" aspect={1.6}>
-                <RadarChart cx="50%" cy="50%" outerRadius="55%" data={tourismData}>
+                <RadarChart cx="50%" cy="50%" outerRadius="45%" data={tourismData}>
                   <PolarGrid stroke="rgba(0,0,0,0.05)" />
                   <PolarAngleAxis dataKey="subject" tick={<CustomAxisTick />} />
                   <Radar name="Visitors" dataKey="A" stroke="var(--purple-light)" fill="var(--purple-light)" fillOpacity={0.4} />

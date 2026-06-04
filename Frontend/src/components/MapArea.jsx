@@ -36,13 +36,6 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const destPosition = { left: 17.6, top: 94 };
 
   const extractItemsForCity = (items, cityName) => {
-<<<<<<< HEAD
-    if (!items || !cityName || !Array.isArray(items)) return [];
-    const cn = cityName.split(',')[0].trim().toLowerCase();
-    return items.filter(item =>
-      typeof item === 'string' && item.toLowerCase().includes(cn)
-    ).slice(0, 3);
-=======
     if (!Array.isArray(items) || !cityName) return [];
     const cn = cityName.split(',')[0].trim().toLowerCase();
 
@@ -58,7 +51,6 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
     });
 
     return normalized.filter(text => text.toLowerCase().includes(cn)).slice(0, 3);
->>>>>>> 1b63f40e44e6a51f46a21f43f327770fafd66284
   };
 
   const srcCity = String(sourceName || '').split(',')[0].trim();
@@ -100,7 +92,7 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
             <div className="info-row">
               <Users size={14} />
               <span className="info-label">Population:</span>
-              <span className="info-value">{(info.population / 10000000).toFixed(1)} Cr</span>
+              <span className="info-value">{Number(info.population).toLocaleString()}</span>
             </div>
           )}
           {info.industries.length > 0 && (
