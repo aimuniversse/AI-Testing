@@ -541,9 +541,15 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
     if (hasValue(areaSeg.job_business_areas)) {
       const businessScore = corridorPot.business ? ` (Potential: ${corridorPot.business}%)` : "";
+      // get up 2
+      const business = Array.isArray(areaSeg.job_business_areas)
+        ? areaSeg.job_business_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        : (areaSeg.job_business_areas?.name ?? areaSeg.job_business_areas ?? '');
+
+
       items.push({
-        title: 'Job & Business',
-        content: `${getFirstName(areaSeg.job_business_areas)}${businessScore}`,
+        title: 'Business',
+        content: `${getFirstName(business)}${businessScore}`,
         icon: <Briefcase />,
         color: 'orange'
       });
@@ -551,9 +557,15 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
     if (hasValue(areaSeg.student_areas)) {
       const studentScore = corridorPot.student ? ` (Potential: ${corridorPot.student}%)` : "";
+      //get up 2 
+      const areas = Array.isArray(areaSeg.student_areas)
+        ? areaSeg.student_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        : (areaSeg.student_areas?.name ?? areaSeg.student_areas ?? '');
+
+      
       items.push({
         title: 'Education Hubs',
-        content: `${getFirstName(areaSeg.student_areas)}${studentScore}`,
+        content: `${(areas)}${studentScore}`,
         icon: <GraduationCap />,
         color: 'purple'
       });
@@ -563,7 +575,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       const touristScore = corridorPot.tourist ? ` (Potential: ${corridorPot.tourist}%)` : "";
       // Get up to 2 names
       const places = Array.isArray(areaSeg.tourist_places)
+<<<<<<< HEAD
         ? areaSeg.tourist_places.slice(0, 2).map(p => p?.name ?? p ?? '').join(', ')
+=======
+        ? areaSeg.tourist_places.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
         : (areaSeg.tourist_places?.name ?? areaSeg.tourist_places ?? '');
 
       items.push({
@@ -575,22 +591,22 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     }
 
     // Add a 4th card from a second business area if available
-    if (items.length < 4 && Array.isArray(areaSeg.job_business_areas) && areaSeg.job_business_areas.length > 1) {
-      const entry = areaSeg.job_business_areas[1];
-      items.push({
-        title: 'Industrial Center',
-        content: entry?.name ?? entry ?? '',
-        icon: <Factory />,
-        color: 'blue'
-      });
-    }
+    // if (items.length < 4 && Array.isArray(areaSeg.job_business_areas) && areaSeg.job_business_areas.length > 1) {
+    //   const entry = areaSeg.job_business_areas[1];
+    //   items.push({
+    //     title: 'Industrial Center',
+    //     content: entry?.name ?? entry ?? '',
+    //     icon: <Factory />,
+    //     color: 'blue'
+    //   });
+    // }
 
     // Fallbacks if API returned no usable segmentation data
     const fallbacks = [
       { title: 'Job & Business', content: 'Major Industrial Hubs', icon: <Briefcase />, color: 'orange' },
       { title: 'Institutions', content: 'Education & Research Centers', icon: <GraduationCap />, color: 'purple' },
       { title: 'Tourist Hotspots', content: 'Heritage & Nature Sites', icon: <Mountain />, color: 'green' },
-      { title: 'Logistics Hubs', content: 'Key Transport Junctions', icon: <Factory />, color: 'blue' }
+      // { title: 'Logistics Hubs', content: 'Key Transport Junctions', icon: <Factory />, color: 'blue' }
     ];
 
     return items.length >= 2 ? items : fallbacks;
@@ -763,7 +779,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-blue-main"></span>
                     <span className="city-name">{popData.source.name}</span>
                   </div> <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-blue-light text-blue-main">{(popData.source.count || popData.source.population || 0).toLocaleString()}</div>
+=======
+                  <div className="pop-badge bg-blue-light text-blue-main">{((popData.source.count || popData.source.population || 0)).toFixed(0)}</div>
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
                 </div>
               )}
 
@@ -776,7 +796,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-purple-main"></span>
                     <span className="city-name">{popData.via.name}</span>
                   </div> <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-purple-light text-purple-main">{Number(popData.via.count || popData.via.population || 0).toLocaleString()}</div>
+=======
+                  <div className="pop-badge bg-purple-light text-purple-main">{((popData.via.count || popData.via.population || 0)).toFixed(0)}</div>
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
                 </div>
               )}
 
@@ -790,7 +814,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="city-name">{popData.destination.name}</span>
                   </div>
                   <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-green-light text-green-main">{Number(popData.destination.count || popData.destination.population || 0).toLocaleString()}</div>
+=======
+                  <div className="pop-badge bg-green-light text-green-main">{((popData.destination.count || popData.destination.population || 0)).toFixed(0)}</div>
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
                 </div>
               )}
             </div>
@@ -866,7 +894,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
         </section> */}
 
         {/* Concept 3: Area Segmentation Timeline */}
-        <section className="analysis-section-box section-spacing">
+        {/* <section className="analysis-section-box section-spacing">
           <div className="box-header">
             <div className="icon-wrap bg-green"><MapPin /></div>
             <h2>Area Segmentation</h2>
@@ -891,7 +919,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Concept 4: Total Visitor Count - Redesigned */}
         <section className="analysis-section-box section-spacing visitor-stats-container">
