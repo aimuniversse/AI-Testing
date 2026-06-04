@@ -4,7 +4,7 @@ import { Bus, ArrowRight, Zap } from "lucide-react";
 import Scene from "./Scene";
 import "../styles/searchingoverlay.css";
 
-const TOTAL_DURATION = 0; // 5 minutes in seconds
+const TOTAL_DURATION = 10; // 5 minutes in seconds
 
 const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
     const [progress, setProgress] = useState(0);
@@ -107,11 +107,15 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
                 console.log(`[API Response] Status: ${response.status}`);
 
                 if (!response.ok) {
-                    let errorMsg = "Failed to fetch route analysis";
+                    let errorMsg = `Failed to fetch route analysis (${response.status})`;
                     try {
                         const errorData = await response.json();
+<<<<<<< HEAD
                         console.error("[API Error Response]:", errorData);
                         errorMsg = errorData.message || errorMsg;
+=======
+                        errorMsg = errorData.message || errorData.error || errorMsg;
+>>>>>>> 9fd872aa82b47291fd129db9b2ea9917031ea743
                     } catch (e) { /* not JSON */ }
                     throw new Error(errorMsg);
                 }

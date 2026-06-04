@@ -75,7 +75,7 @@ const AreaPotentialMap = ({ routeData, isLoading }) => {
                         <h4>{item.district}</h4>
                         <span className="region-type">Industrial Zone</span>
                       </div>
-                      <div className={`potential-tag ${item.business_potential.toLowerCase()}`}>
+                      <div className={`potential-tag ${String(item.business_potential || '').toLowerCase()}`}>
                         {item.business_potential}
                       </div>
                     </div>

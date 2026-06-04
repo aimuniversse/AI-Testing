@@ -18,7 +18,7 @@ const BottomWidgets = ({ routeData }) => {
 
   return (
     <>
-      <div className="glass-panel bottom-widget traffic-widget hover-lift">
+      {/*<div className="glass-panel bottom-widget traffic-widget hover-lift">
         <div className="widget-header">
           <h3>Live Traffic Updates</h3>
           <span className="live-indicator">
@@ -59,12 +59,12 @@ const BottomWidgets = ({ routeData }) => {
             <div className="text-xs text-muted mt-1">{weatherDetails.details}</div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="glass-panel bottom-widget hover-lift">
         <div className="widget-header">
           <h3>Recent Search</h3>
-          <button className="text-accent text-xs font-bold hover:underline">View All</button>
+          {/*<button className="text-accent text-xs font-bold hover:underline">View All</button> */}
         </div>
         <div className="update-item">
           <div className="icon-circle dark-bg">
@@ -73,8 +73,8 @@ const BottomWidgets = ({ routeData }) => {
           <div className="flex-1">
             <div className="search-route">
               <span className="city-pill">{startCity.split(',')[0]}</span>
-              {/* <ArrowRight size={14} className="text-muted" />
-              <span className="city-pill">{endCity.split(',')[0]}</span> */}
+              <ArrowRight size={14} className="text-muted" />
+              <span className="city-pill">{endCity.split(',')[0]}</span>
             </div>
             <div className="text-xs text-muted mt-1 font-medium">Just now</div>
           </div>

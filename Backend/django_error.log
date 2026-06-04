@@ -966,7 +966,13 @@ Source: Chennai, Dest: Coimbatore, Via:
 Error: Unable to fetch route analysis at the moment
 ------------------------------
 
+<<<<<<< HEAD
 --- API ERROR AT 2026-06-03 09:31:04.631594+00:00 ---
 Source: coimbatore, Dest: chennai, Via: 
 Error: OSRM request failed: HTTPSConnectionPool(host='router.project-osrm.org', port=443): Max retries exceeded with url: /route/v1/driving/76.96612,11.00555;80.27847,13.08784?overview=false (Caused by NameResolutionError("HTTPSConnection(host='router.project-osrm.org', port=443): Failed to resolve 'router.project-osrm.org' ([Errno 11001] getaddrinfo failed)"))
+=======
+--- API ERROR AT 2026-06-02 07:14:34.047551+00:00 ---
+Source: Tirupati, Dest: Rameswaram, Via: Tiruvannamalai
+Error: Unable to fetch route analysis at the moment
+>>>>>>> 9fd872aa82b47291fd129db9b2ea9917031ea743
 ------------------------------
