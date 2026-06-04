@@ -9,7 +9,11 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const routePath = routeData?.route_summary?.path || routeQuery || '';
   let parsedPath = [];
   if (Array.isArray(routePath)) {
-    parsedPath = routePath;
+    parsedPath = routePath.map(c => {
+      if (typeof c === 'string') return c.trim();
+      if (c && typeof c === 'object' && c.name) return String(c.name).trim();
+      return String(c || '').trim();
+    });
   } else if (typeof routePath === 'string') {
     if (routePath.includes(' → ')) {
       parsedPath = routePath.split(' → ').map(c => c.trim());
@@ -32,16 +36,16 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const destPosition = { left: 17.6, top: 94 };
 
   const extractItemsForCity = (items, cityName) => {
-    if (!items || !cityName) return [];
+    if (!items || !cityName || !Array.isArray(items)) return [];
     const cn = cityName.split(',')[0].trim().toLowerCase();
     return items.filter(item =>
-      item.toLowerCase().includes(cn)
+      typeof item === 'string' && item.toLowerCase().includes(cn)
     ).slice(0, 3);
   };
 
-  const srcCity = sourceName.split(',')[0].trim();
-  const dstCity = destName.split(',')[0].trim();
-  const viaCity = viaName ? viaName.split(',')[0].trim() : null;
+  const srcCity = String(sourceName || '').split(',')[0].trim();
+  const dstCity = String(destName || '').split(',')[0].trim();
+  const viaCity = viaName ? String(viaName || '').split(',')[0].trim() : null;
 
   const sourceInfo = {
     population: routeData?.population_data?.source?.population,

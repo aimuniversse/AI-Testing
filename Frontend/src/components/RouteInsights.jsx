@@ -62,14 +62,19 @@ const RouteInsights = ({ routeQuery, routeData }) => {
     const dstName = aiPop?.destination?.name || 'Destination';
     const srcCity = srcName.split(',')[0].trim().toLowerCase();
     const dstCity = dstName.split(',')[0].trim().toLowerCase();
-    const formatSpot = (s) => s.trim();
+    const formatSpot = (s) => {
+      if (typeof s === 'string') return s.trim();
+      if (s && typeof s === 'object' && s.name) return String(s.name).trim();
+      return String(s || '').trim();
+    };
 
     const spotsToUse = [];
 
     // Priority 1: Use all available real tourist spots from backend (up to 5)
     allSpots.forEach(spot => {
       if (spotsToUse.length < 5) {
-        const sName = spot.toLowerCase();
+        const name = formatSpot(spot);
+        const sName = name.toLowerCase();
         let val = 65; // Default for route spots
         let cityType = 'ROUTE';
 
@@ -85,7 +90,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
         const existingCount = spotsToUse.filter(s => s.cityType === cityType).length;
         if (existingCount > 0) val = val * (1 - (existingCount * 0.1));
 
-        spotsToUse.push({ name: formatSpot(spot), cityType, val });
+        spotsToUse.push({ name, cityType, val });
       }
     });
 

@@ -468,7 +468,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     if (!routeData?.route_summary?.path) return [];
 
     const pathData = routeData.route_summary.path;
-    const cities = Array.isArray(pathData) ? pathData : pathData.split(' → ').map(c => c.trim());
+    const cities = (Array.isArray(pathData) ? pathData : pathData.split(' → ')).map(c => {
+      if (typeof c === 'string') return c.trim();
+      if (c && typeof c === 'object' && c.name) return String(c.name).trim();
+      return String(c || '').trim();
+    });
     const segmentation = routeData.area_segmentation || {};
     const areaPotential = routeData.dashboard_data?.area_potential || [];
 
@@ -478,12 +482,12 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       let desc = `${city}: A key point along the corridor.`;
 
       // Check for detailed data in area_potential
-      const districtData = areaPotential.find(d => d.district.toLowerCase().includes(city.toLowerCase()));
+      const districtData = areaPotential.find(d => String(d.district || '').toLowerCase().includes(String(city).toLowerCase()));
 
       // Assign type and icon based on segmentation data
-      const isIndustrial = (segmentation.job_business_areas || []).some(s => (s?.name || s)?.toLowerCase().includes(city.toLowerCase()));
-      const isTourist = (segmentation.tourist_places || []).some(s => (s?.name || s)?.toLowerCase().includes(city.toLowerCase()));
-      const isStudent = (segmentation.student_areas || []).some(s => (s?.name || s)?.toLowerCase().includes(city.toLowerCase()));
+      const isIndustrial = (segmentation.job_business_areas || []).some(s => String(s?.name || s || '').toLowerCase().includes(String(city).toLowerCase()));
+      const isTourist = (segmentation.tourist_places || []).some(s => String(s?.name || s || '').toLowerCase().includes(String(city).toLowerCase()));
+      const isStudent = (segmentation.student_areas || []).some(s => String(s?.name || s || '').toLowerCase().includes(String(city).toLowerCase()));
 
       if (idx === 0) {
         type = 'Origin';
@@ -597,7 +601,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     if (!routeData?.route_summary?.path) return { cities: [], matrix: [] };
 
     const pathData = routeData.route_summary.path;
-    const cities = Array.isArray(pathData) ? pathData : pathData.split(' → ').map(c => c.trim());
+    const cities = (Array.isArray(pathData) ? pathData : pathData.split(' → ')).map(c => {
+      if (typeof c === 'string') return c.trim();
+      if (c && typeof c === 'object' && c.name) return String(c.name).trim();
+      return String(c || '').trim();
+    });
     const segments = Array.isArray(routeData.distance_details) ? routeData.distance_details : [];
     
     // Create a cumulative distance map
