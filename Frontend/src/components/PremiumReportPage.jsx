@@ -602,7 +602,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       { title: 'Job & Business', content: 'Major Industrial Hubs', icon: <Briefcase />, color: 'orange' },
       { title: 'Institutions', content: 'Education & Research Centers', icon: <GraduationCap />, color: 'purple' },
       { title: 'Tourist Hotspots', content: 'Heritage & Nature Sites', icon: <Mountain />, color: 'green' },
-      { title: 'Logistics Hubs', content: 'Key Transport Junctions', icon: <Factory />, color: 'blue' }
+      // { title: 'Logistics Hubs', content: 'Key Transport Junctions', icon: <Factory />, color: 'blue' }
     ];
 
     return items.length >= 2 ? items : fallbacks;
@@ -878,7 +878,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
         </section> */}
 
         {/* Concept 3: Area Segmentation Timeline */}
-        <section className="analysis-section-box section-spacing">
+        {/* <section className="analysis-section-box section-spacing">
           <div className="box-header">
             <div className="icon-wrap bg-green"><MapPin /></div>
             <h2>Area Segmentation</h2>
@@ -903,7 +903,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
 
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Concept 4: Total Visitor Count - Redesigned */}
         <section className="analysis-section-box section-spacing visitor-stats-container">

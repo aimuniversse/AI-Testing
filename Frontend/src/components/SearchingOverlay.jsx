@@ -110,12 +110,7 @@ const SearchingOverlay = ({ from, via, to, onCancel, onDataReady }) => {
                     let errorMsg = `Failed to fetch route analysis (${response.status})`;
                     try {
                         const errorData = await response.json();
-<<<<<<< HEAD
-                        console.error("[API Error Response]:", errorData);
-                        errorMsg = errorData.message || errorMsg;
-=======
                         errorMsg = errorData.message || errorData.error || errorMsg;
->>>>>>> 9fd872aa82b47291fd129db9b2ea9917031ea743
                     } catch (e) { /* not JSON */ }
                     throw new Error(errorMsg);
                 }
