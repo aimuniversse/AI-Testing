@@ -7503,6 +7503,15 @@ Body: {"source":"Bengaluru","destination":"Chennai","via":""}
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
 ------------------------------
+<<<<<<< HEAD
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+=======
 >>>>>>> 9fd872aa82b47291fd129db9b2ea9917031ea743
 
 --- REQUEST AT /api/route-analysis/ ---
@@ -7511,6 +7520,7 @@ Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
 
 --- REQUEST AT /api/route-analysis/ ---
 Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
 ------------------------------
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
@@ -7520,6 +7530,9 @@ Status: 200
 ------------------------------
 
 --- REQUEST AT /api/route-analysis/ ---
+<<<<<<< HEAD
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+=======
 Body: {"source":"Coimbatore","destination":"Chennai","via":""}
 ------------------------------
 
@@ -7528,13 +7541,74 @@ Body: {"source":"Coimbatore","destination":"Chennai","via":""}
 ------------------------------
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
 ------------------------------
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
 ------------------------------
 
 --- REQUEST AT /api/route-analysis/ ---
+<<<<<<< HEAD
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Bengaluru","destination":"Chennai","via":""}
+=======
 Body: {"source":"Coimbatore","destination":"Chennai","via":""}
+>>>>>>> 35513faee8bcea77b75c2c783615d20a60301381
 ------------------------------
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200

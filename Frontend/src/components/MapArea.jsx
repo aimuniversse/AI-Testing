@@ -92,7 +92,7 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
             <div className="info-row">
               <Users size={14} />
               <span className="info-label">Population:</span>
-              <span className="info-value">{(info.population / 10000000).toFixed(1)} Cr</span>
+              <span className="info-value">{Number(info.population).toLocaleString()}</span>
             </div>
           )}
           {info.industries.length > 0 && (
