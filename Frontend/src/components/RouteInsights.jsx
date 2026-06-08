@@ -251,7 +251,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
           <div className="insight-card hover-lift">
             <div className="insight-card-header">
               <div className="insight-icon red"><Users size={20} /></div>
-              <h3>Demographics & Distance</h3>
+              <h3>Location-Based Analytics</h3>
             </div>
             <div className="insight-card-content" style={{ width: '100%', minWidth: '0px' }}>
               <ResponsiveContainer width="100%" aspect={1.6}>
@@ -273,7 +273,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
+            {/*<div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
               <div className="flex justify-between items-center text-xs">
                 <span className="text-muted">{suggestedRoutes[0]?.path || 'Primary Route'}</span>
                 <span className="font-bold text-primary">{suggestedRoutes[0]?.distance || primaryDistance} KM</span>
@@ -282,7 +282,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
                 <span className="text-muted">{suggestedRoutes[1]?.path || 'Alternative'}</span>
                 <span className="font-medium text-secondary">{suggestedRoutes[1]?.distance || Math.round(primaryDistance * 1.05)} KM</span>
               </div>
-            </div>
+            </div>*/}
           </div>
         )}
 
@@ -391,7 +391,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
           </div>
         )}
 
-        {/* 5. Suggested Routes (Graphical Timeline) */}
+        {/* 5. Suggested Routes (Graphical Timeline) 
         {suggestedRoutes.length > 0 && (
           <div className="insight-card hover-lift">
             <div className="insight-card-header">
@@ -415,7 +415,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
 
             </div>
           </div>
-        )}
+        )} */}
 
       </div>
     </div>

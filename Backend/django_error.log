@@ -1232,3 +1232,8 @@ Error: Unable to fetch route analysis at the moment
 Source: Hyderabad, Dest: Vijayawada, Via: 
 Error: Unable to fetch route analysis at the moment
 ------------------------------
+
+--- API ERROR AT 2026-06-08 10:18:04.942904+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------

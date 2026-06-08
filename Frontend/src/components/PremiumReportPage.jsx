@@ -571,11 +571,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       const touristScore = corridorPot.tourist ? ` (Potential: ${corridorPot.tourist}%)` : "";
       // Get up to 2 names
       const places = Array.isArray(areaSeg.tourist_places)
-<<<<<<< HEAD
-        ? areaSeg.tourist_places.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
-=======
         ? areaSeg.tourist_places.slice(0, 10).map(p => p?.name ?? p ?? '').join(', ')
->>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
         : (areaSeg.tourist_places?.name ?? areaSeg.tourist_places ?? '');
 
       items.push({
@@ -775,11 +771,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-blue-main"></span>
                     <span className="city-name">{popData.source.name}</span>
                   </div> <h5>City Population</h5>
-<<<<<<< HEAD
-                  <div className="pop-badge bg-blue-light text-blue-main">{((popData.source.count || popData.source.population || 0)).toFixed(0)}</div>
-=======
                   <div className="pop-badge bg-blue-light text-blue-main">{Number(popData.source.count || popData.source.population || 0).toLocaleString()}</div>
->>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
 
@@ -792,11 +784,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-purple-main"></span>
                     <span className="city-name">{popData.via.name}</span>
                   </div> <h5>City Population</h5>
-<<<<<<< HEAD
-                  <div className="pop-badge bg-purple-light text-purple-main">{((popData.via.count || popData.via.population || 0)).toFixed(0)}</div>
-=======
                   <div className="pop-badge bg-purple-light text-purple-main">{Number(popData.via.count || popData.via.population || 0).toLocaleString()}</div>
->>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
 
@@ -810,11 +798,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="city-name">{popData.destination.name}</span>
                   </div>
                   <h5>City Population</h5>
-<<<<<<< HEAD
-                  <div className="pop-badge bg-green-light text-green-main">{((popData.destination.count || popData.destination.population || 0)).toFixed(0)}</div>
-=======
                   <div className="pop-badge bg-green-light text-green-main">{Number(popData.destination.count || popData.destination.population || 0).toLocaleString()}</div>
->>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
             </div>

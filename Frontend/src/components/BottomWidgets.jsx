@@ -61,29 +61,29 @@ const BottomWidgets = ({ routeData }) => {
         </div>
       </div> */}
 
-      <div className="glass-panel bottom-widget hover-lift">
-        <div className="widget-header">
-          <h3>Recent Search</h3>
-          {/*<button className="text-accent text-xs font-bold hover:underline">View All</button> */}
+      {/*<div className="glass-panel bottom-widget hover-lift">
+      <div className="widget-header">
+        <h3>Recent Search</h3>
+        <button className="text-accent text-xs font-bold hover:underline">View All</button> 
+      </div>
+      <div className="update-item">
+        <div className="icon-circle dark-bg">
+          <Clock size={18} />
         </div>
-        <div className="update-item">
-          <div className="icon-circle dark-bg">
-            <Clock size={18} />
+        <div className="flex-1">
+          <div className="search-route">
+            <span className="city-pill">{startCity.split(',')[0]}</span>
+            <ArrowRight size={14} className="text-muted" />
+            <span className="city-pill">{endCity.split(',')[0]}</span>
           </div>
-          <div className="flex-1">
-            <div className="search-route">
-              <span className="city-pill">{startCity.split(',')[0]}</span>
-              <ArrowRight size={14} className="text-muted" />
-              <span className="city-pill">{endCity.split(',')[0]}</span>
-            </div>
-            <div className="text-xs text-muted mt-1 font-medium">Just now</div>
-          </div>
-          <div className="search-stats">
-            <div className="distance-value">{distance} km</div>
-            <div className="time-value">{timeMins} min</div>
-          </div>
+          <div className="text-xs text-muted mt-1 font-medium">Just now</div>
+        </div>
+        <div className="search-stats">
+          <div className="distance-value">{distance} km</div>
+          <div className="time-value">{timeMins} min</div>
         </div>
       </div>
+    </div> */}
     </>
   );
 };
