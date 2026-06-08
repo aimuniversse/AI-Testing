@@ -190,9 +190,9 @@ const Charts = ({ routeData }) => {
             {/* Using a custom combination of Area and Bar for the requested "curved" look */}
             <AreaChart
               data={[
-                { name: 'Business', value: potentialValues.business, barVal: potentialValues.business },
-                { name: 'Student', value: potentialValues.student, barVal: potentialValues.student },
-                { name: 'Tourist', value: potentialValues.tourist, barVal: potentialValues.tourist }
+                { value: potentialValues.business, barVal: potentialValues.business },
+                { value: potentialValues.student, barVal: potentialValues.student },
+                { value: potentialValues.tourist, barVal: potentialValues.tourist }
               ]}
               margin={{ top: 10, right: 30, left: 30, bottom: 30 }}
             >

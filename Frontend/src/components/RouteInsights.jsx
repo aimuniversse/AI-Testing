@@ -364,7 +364,7 @@ const RouteInsights = ({ routeQuery, routeData }) => {
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
-            <div className="text-xs text-center text-muted"> Bar represents economic/tourist potential along the corridor.</div>
+            <div className="text-xs text-center text-muted"> Bar represents potential value of the particular sector in the corridor.</div>
           </div>
         )}
 
