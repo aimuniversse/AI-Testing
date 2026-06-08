@@ -391,32 +391,30 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     let details = [];
 
     if (Array.isArray(schedule)) {
-      // New structure: filter by type
-      if (schedule.length > 0 && schedule[0].type) {
-        details = schedule.filter(s => s.type === 'bus').map(s => ({
+      const busItems = schedule.filter(s => s.type && String(s.type).toLowerCase() === 'bus');
+      if (busItems.length > 0) {
+        details = busItems.map(s => ({
           from: s.from,
           to: s.to,
           label: 'Regular Service',
-          count: s.trips_per_day,
+          count: s.trips_per_day || s.bus_trips || 0,
           icon: <Bus size={18} />
         }));
       } else {
-        // Old list structure
         details = schedule.map(item => ({
           from: item.from,
           to: item.to,
           label: 'Regular Service',
-          count: item.bus_trips,
+          count: item.bus_trips || item.trips_per_day || 0,
           icon: <Bus size={18} />
-        }));
+        })).filter(item => item.count !== undefined && item.count > 0);
       }
     } else if (schedule.route_details) {
-      // Intermediate structure
       details = schedule.route_details.map(item => ({
         from: item.from,
         to: item.to,
         label: schedule.bus?.frequency_minutes ? `Every ${schedule.bus.frequency_minutes} mins` : 'Regular Service',
-        count: item.bus_trips,
+        count: item.bus_trips || 0,
         icon: <Bus size={18} />
       }));
     }
@@ -431,32 +429,30 @@ export default function PremiumReportPage({ routeData, isLoading }) {
     let details = [];
 
     if (Array.isArray(schedule)) {
-      // New structure: filter by type
-      if (schedule.length > 0 && schedule[0].type) {
-        details = schedule.filter(s => s.type === 'train').map(s => ({
+      const trainItems = schedule.filter(s => s.type && String(s.type).toLowerCase() === 'train');
+      if (trainItems.length > 0) {
+        details = trainItems.map(s => ({
           from: s.from,
           to: s.to,
           label: 'Scheduled Service',
-          count: s.trips_per_day,
+          count: s.trips_per_day || s.train_trips || 0,
           icon: <Train size={18} />
         }));
       } else {
-        // Old list structure
         details = schedule.map(item => ({
           from: item.from,
           to: item.to,
           label: 'Scheduled Service',
-          count: item.train_trips,
+          count: item.train_trips || item.trips_per_day || 0,
           icon: <Train size={18} />
-        }));
+        })).filter(item => item.count !== undefined && item.count > 0);
       }
     } else if (schedule.route_details) {
-      // Intermediate structure
       details = schedule.route_details.map(item => ({
         from: item.from,
         to: item.to,
         label: schedule.train?.major_trains?.length ? `${schedule.train.major_trains.length} Major Trains` : 'Scheduled Service',
-        count: item.train_trips,
+        count: item.train_trips || 0,
         icon: <Train size={18} />
       }));
     }
@@ -543,7 +539,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       const businessScore = corridorPot.business ? ` (Potential: ${corridorPot.business}%)` : "";
       // get up 2
       const business = Array.isArray(areaSeg.job_business_areas)
-        ? areaSeg.job_business_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        ? areaSeg.job_business_areas.slice(0, 10).map(p => p?.name ?? p ?? '').join(' , ')
         : (areaSeg.job_business_areas?.name ?? areaSeg.job_business_areas ?? '');
 
 
@@ -559,7 +555,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       const studentScore = corridorPot.student ? ` (Potential: ${corridorPot.student}%)` : "";
       //get up 2 
       const areas = Array.isArray(areaSeg.student_areas)
-        ? areaSeg.student_areas.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+        ? areaSeg.student_areas.slice(0, 10).map(p => p?.name ?? p ?? '').join(' , ')
         : (areaSeg.student_areas?.name ?? areaSeg.student_areas ?? '');
 
 
@@ -575,7 +571,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
       const touristScore = corridorPot.tourist ? ` (Potential: ${corridorPot.tourist}%)` : "";
       // Get up to 2 names
       const places = Array.isArray(areaSeg.tourist_places)
+<<<<<<< HEAD
         ? areaSeg.tourist_places.slice(0, 4).map(p => p?.name ?? p ?? '').join(', ')
+=======
+        ? areaSeg.tourist_places.slice(0, 10).map(p => p?.name ?? p ?? '').join(', ')
+>>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
         : (areaSeg.tourist_places?.name ?? areaSeg.tourist_places ?? '');
 
       items.push({
@@ -775,7 +775,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-blue-main"></span>
                     <span className="city-name">{popData.source.name}</span>
                   </div> <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-blue-light text-blue-main">{((popData.source.count || popData.source.population || 0)).toFixed(0)}</div>
+=======
+                  <div className="pop-badge bg-blue-light text-blue-main">{Number(popData.source.count || popData.source.population || 0).toLocaleString()}</div>
+>>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
 
@@ -788,7 +792,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="dot bg-purple-main"></span>
                     <span className="city-name">{popData.via.name}</span>
                   </div> <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-purple-light text-purple-main">{((popData.via.count || popData.via.population || 0)).toFixed(0)}</div>
+=======
+                  <div className="pop-badge bg-purple-light text-purple-main">{Number(popData.via.count || popData.via.population || 0).toLocaleString()}</div>
+>>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
 
@@ -802,7 +810,11 @@ export default function PremiumReportPage({ routeData, isLoading }) {
                     <span className="city-name">{popData.destination.name}</span>
                   </div>
                   <h5>City Population</h5>
+<<<<<<< HEAD
                   <div className="pop-badge bg-green-light text-green-main">{((popData.destination.count || popData.destination.population || 0)).toFixed(0)}</div>
+=======
+                  <div className="pop-badge bg-green-light text-green-main">{Number(popData.destination.count || popData.destination.population || 0).toLocaleString()}</div>
+>>>>>>> 31f82edd086dfbddc06076923ea595625a1ac679
                 </div>
               )}
             </div>
@@ -961,7 +973,7 @@ export default function PremiumReportPage({ routeData, isLoading }) {
             <div className="stat-card-modern highlighted">
               <div className="stat-card-header">
                 <div className="mini-icon bg-pink-soft"><TrendingUp size={16} className="text-pink" /></div>
-                <span>Both Places Total Daily Peak Visitor Count</span>
+                <span>Both Places Total Holiday Visitor Count</span>
               </div>
               <div className="stat-value">
                 {(((Number(visitors.source?.daily_peak) || 0) + (Number(visitors.destination?.daily_peak) || 0))).toFixed(0)}
