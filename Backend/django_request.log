@@ -8635,3 +8635,66 @@ Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
 --- RESPONSE FOR /api/route-analysis/ ---
 Status: 200
 ------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 200
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------
+
+--- REQUEST AT /api/route-analysis/ ---
+Body: {"source":"Hyderabad","destination":"Vijayawada","via":""}
+------------------------------
+--- RESPONSE FOR /api/route-analysis/ ---
+Status: 500
+Content: {"status":"error","message":"Unable to fetch route analysis at the moment"}
+------------------------------

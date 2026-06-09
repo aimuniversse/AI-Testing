@@ -14,7 +14,6 @@ import Header from "./components/Header";
 import MapArea from "./components/MapArea";
 import LuggageShare from "./components/LuggageShare";
 import Charts from "./components/Charts";
-import BottomWidgets from "./components/BottomWidgets";
 import RouteInsights from "./components/RouteInsights";
 import PremiumReportPage from "./components/PremiumReportPage";
 import SearchingOverlay from "./components/SearchingOverlay";
@@ -77,10 +76,10 @@ function App() {
     localStorage.setItem("activeTab", activeTab);
     localStorage.setItem("routeQuery", routeQuery);
     localStorage.setItem("viaCity", viaCity);
-    
+
     if (results) localStorage.setItem("results", JSON.stringify(results));
     else localStorage.removeItem("results");
-    
+
     if (routeData) localStorage.setItem("routeData", JSON.stringify(routeData));
     else localStorage.removeItem("routeData");
   }, [hasSearched, activeTab, routeQuery, viaCity, results, routeData]);
@@ -125,7 +124,7 @@ function App() {
     setActiveTab("home");
     setRouteData(null);
     setResults(null);
-    
+
     // Clear all persistence
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userData");
@@ -135,7 +134,7 @@ function App() {
     localStorage.removeItem("viaCity");
     localStorage.removeItem("results");
     localStorage.removeItem("routeData");
-    
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -234,7 +233,7 @@ function App() {
         }
         console.warn(
           `Background sync returned ${response.status} (${consecutiveFailures.current}/2 failures)` +
-            (backendMsg ? `: ${backendMsg}` : "")
+          (backendMsg ? `: ${backendMsg}` : "")
         );
       }
     } catch (err) {
@@ -298,18 +297,18 @@ function App() {
       )}
 
       {/* Auth Modal */}
-      <AuthModal 
+      <AuthModal
         key={isAuthModalOpen ? 'open' : 'closed'}
-        isOpen={isAuthModalOpen} 
+        isOpen={isAuthModalOpen}
         initialIsLogin={authInitialMode}
-        onClose={() => setIsAuthModalOpen(false)} 
+        onClose={() => setIsAuthModalOpen(false)}
         onLoginSuccess={handleLoginSuccess}
       />
 
       {/* Navbar */}
-      <Navbar 
-        onHomeClick={handleHomeClick} 
-        onSearchClick={handleSearchClick} 
+      <Navbar
+        onHomeClick={handleHomeClick}
+        onSearchClick={handleSearchClick}
         onHelpClick={handleHelpClick}
         onAuthClick={handleAuthClick}
         onProfileClick={handleProfileClick}
@@ -319,11 +318,11 @@ function App() {
       />
 
       {/* Profile Modal */}
-      <ProfileModal 
-        isOpen={isProfileModalOpen} 
-        onClose={() => setIsProfileModalOpen(false)} 
-        userData={userData} 
-        onLogout={handleLogout} 
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        userData={userData}
+        onLogout={handleLogout}
         onUpdateUser={handleUpdateUser}
       />
 
@@ -418,11 +417,6 @@ function App() {
               <div className="charts-row">
                 <Charts routeData={routeData} />
               </div>
-
-              <div className="widgets-row">
-                <BottomWidgets routeData={routeData} />
-              </div>
-
               <div className="insights-row">
                 <RouteInsights
                   routeQuery={routeQuery}

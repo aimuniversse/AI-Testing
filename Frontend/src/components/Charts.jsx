@@ -89,44 +89,10 @@ const Charts = ({ routeData }) => {
 
   return (
     <>
-      {/* Traffic Trends 
-      <div className="glass-panel chart-widget hover-lift">
-        <div className="widget-header">
-          <h3>Traffic Trends</h3>
-          <select className="widget-select">
-            <option>Today</option>
-          </select>
-        </div>
-        <div className="chart-container" style={{ width: '100%', height: '100%', minHeight: 0, minWidth: 0 }}>
-          <ResponsiveContainer width="99%" height="100%">
-            <AreaChart data={trafficTrends} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorTrafficRed" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="var(--accent-blue)" stopOpacity={0.4}/>
-                  <stop offset="50%" stopColor="var(--accent-blue)" stopOpacity={0.1}/>
-                  <stop offset="95%" stopColor="var(--accent-blue)" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{fill: 'var(--text-muted)', fontSize: 11, fontWeight: 500}} dy={10} />
-              <YAxis axisLine={false} tickLine={false} tick={{fill: 'var(--text-muted)', fontSize: 11, fontWeight: 500}} tickFormatter={(val) => `${val}%`} />
-              <Tooltip 
-                contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', backdropFilter: 'blur(10px)', borderColor: 'var(--border-color)', borderRadius: '12px', boxShadow: 'var(--shadow-md)' }}
-                itemStyle={{ color: 'var(--accent-blue)', fontWeight: 'bold' }}
-                cursor={{ stroke: 'rgba(225, 29, 72, 0.2)', strokeWidth: 2, strokeDasharray: '5 5' }}
-              />
-              <Area type="monotone" dataKey="value" stroke="url(#colorTrafficRed)" strokeWidth={4} fillOpacity={1} fill="url(#colorTrafficRed)" activeDot={{ r: 6, fill: 'var(--accent-blue)', stroke: '#fff', strokeWidth: 2 }} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div> */}
-
       {/* Dynamic Bar Chart: Travel Time OR Transport Mode Share */}
       <div className="glass-panel chart-widget hover-lift">
         <div className="widget-header">
           <h3>{transportData ? 'Transport Mode Share' : 'Travel Time by Hour'}</h3>
-          <select className="widget-select">
-            <option>Today</option>
-          </select>
         </div>
         <div className="chart-container" style={{ width: '100%', height: '100%', minHeight: 0, minWidth: 0 }}>
           <ResponsiveContainer width="99%" height="100%">
@@ -217,9 +183,6 @@ const Charts = ({ routeData }) => {
                 fill="url(#colorPotentialOrange)"
                 isAnimationActive={true}
               />
-              {/* Using a trick to render bars on top of the area if we used ComposedChart, 
-                  but here we'll just use a separate layer or bars within the same if possible. 
-                  Recharts AreaChart doesn't support Bar easily, let's use ComposedChart. */}
             </AreaChart>
           </ResponsiveContainer>
 
