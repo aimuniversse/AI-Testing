@@ -35,8 +35,9 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
   const viaPosition = { left: 50, top: 45 };
   const destPosition = { left: 17.6, top: 94 };
 
-  const extractItemsForCity = (items) => {
-    if (!Array.isArray(items)) return [];
+  const extractItemsForCity = (items, cityName) => {
+    if (!Array.isArray(items) || !cityName) return [];
+    const cn = cityName.split(',')[0].trim().toLowerCase();
 
     // Normalize items to strings safely (handle objects, nulls, numbers)
     const normalized = items.map(it => {
@@ -44,41 +45,38 @@ const MapArea = ({ routeData, routeQuery, isLoading }) => {
       if (typeof it === 'string') return it;
       if (typeof it === 'object') {
         // Prefer common text fields when item is an object
-        return (it.name || it.title || it.place || it.city || it.description || it.text || '').toString();
+        return (it.name || it.title || it.place || it.city || it.description || '').toString();
       }
       return String(it);
     });
 
-    return normalized.filter(text => text.trim().length > 0).slice(0, 3);
+    return normalized.filter(text => text.toLowerCase().includes(cn)).slice(0, 3);
   };
 
   const srcCity = String(sourceName || '').split(',')[0].trim();
   const dstCity = String(destName || '').split(',')[0].trim();
   const viaCity = viaName ? String(viaName || '').split(',')[0].trim() : null;
 
-  const areaData = routeData?.area_segmentation || {};
-
   const sourceInfo = {
     population: routeData?.population_data?.source?.population,
-    industries: extractItemsForCity(areaData.job_business_areas || areaData.industries),
-    touristPlaces: extractItemsForCity(areaData.tourist_places || areaData.touristplaces),
-    education: extractItemsForCity(areaData.student_areas || areaData.education_hub || areaData['education hub'])
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, srcCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, srcCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, srcCity)
   };
 
   const destInfo = {
     population: routeData?.population_data?.destination?.population,
-    industries: extractItemsForCity(areaData.job_business_areas || areaData.industries),
-    touristPlaces: extractItemsForCity(areaData.tourist_places || areaData.touristplaces),
-    education: extractItemsForCity(areaData.student_areas || areaData.education_hub || areaData['education hub'])
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, dstCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, dstCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, dstCity)
   };
 
   const viaInfo = viaCity ? {
     population: routeData?.population_data?.via?.population,
-    industries: extractItemsForCity(areaData.job_business_areas || areaData.industries),
-    touristPlaces: extractItemsForCity(areaData.tourist_places || areaData.touristplaces),
-    education: extractItemsForCity(areaData.student_areas || areaData.education_hub || areaData['education hub'])
+    industries: extractItemsForCity(routeData?.area_segmentation?.job_business_areas, viaCity),
+    touristPlaces: extractItemsForCity(routeData?.area_segmentation?.tourist_places, viaCity),
+    education: extractItemsForCity(routeData?.area_segmentation?.student_areas, viaCity)
   } : null;
-
 
   const InfoPanel = ({ info, cityName, position }) => {
     if (!info) return null;

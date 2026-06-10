@@ -1272,3 +1272,38 @@ Error: Unable to fetch route analysis at the moment
 Source: Hyderabad, Dest: Vijayawada, Via: 
 Error: Unable to fetch route analysis at the moment
 ------------------------------
+
+--- API ERROR AT 2026-06-09 06:28:45.038223+00:00 ---
+Source: Chennai, Dest: coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 06:30:31.084705+00:00 ---
+Source: Chennai, Dest: coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 06:55:45.511214+00:00 ---
+Source: Chennai, Dest: coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 06:57:21.864367+00:00 ---
+Source: Chennai, Dest: coimbatore, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 07:24:08.544454+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 07:29:07.979056+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
+
+--- API ERROR AT 2026-06-09 10:40:18.566055+00:00 ---
+Source: Hyderabad, Dest: Vijayawada, Via: 
+Error: Unable to fetch route analysis at the moment
+------------------------------
